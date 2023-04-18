@@ -5,14 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Corporate extends Model
+class Ship extends Model
 {
     use HasFactory;
 
     protected $guarded = ['id'];
 
-    public function containers()
+    public function activities()
     {
-        return $this->hasMany(Container::class, 'container_id');
+        return $this->hasMany(Activity::class);
     }
 }

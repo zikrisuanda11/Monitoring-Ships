@@ -5,14 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Container extends Model
+class Document extends Model
 {
     use HasFactory;
 
     protected $guarded = ['id'];
 
-    public function corporate()
+    public function logistic()
     {
-        return $this->belongsTo(Corporate::class);
+        return $this->belongsTo(Logistic::class, 'logistic_id');
     }
 }

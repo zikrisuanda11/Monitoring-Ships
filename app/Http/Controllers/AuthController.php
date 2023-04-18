@@ -10,25 +10,31 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    public function login(AuthRequest $request)
-    {
-        $credential = $request->only('email', 'password');
 
-        if(Auth::attempt($credential)){
-            $user = User::where('email', $request->email)->first();
-            $token = $user->createToken('auth_token')->plainTextToken;
-            
-            return response()->json([
-                'message' => 'success login',
-                'status' => true,
-                'token' => $token
-            ]);
-        }
-        return response()->json([
-            'message' => 'unauthorized',
-            'status' => false,
-        ], 401);
+    public function login()
+    {
+        return inertia('Auth/Login');
     }
+
+    // public function login(AuthRequest $request)
+    // {
+    //     $credential = $request->only('email', 'password');
+
+    //     if(Auth::attempt($credential)){
+    //         $user = User::where('email', $request->email)->first();
+    //         $token = $user->createToken('auth_token')->plainTextToken;
+            
+    //         return response()->json([
+    //             'message' => 'success login',
+    //             'status' => true,
+    //             'token' => $token
+    //         ]);
+    //     }
+    //     return response()->json([
+    //         'message' => 'unauthorized',
+    //         'status' => false,
+    //     ], 401);
+    // }
 
     public function register(AuthRequest $request)
     {

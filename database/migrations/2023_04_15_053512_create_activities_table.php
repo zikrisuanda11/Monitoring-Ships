@@ -13,15 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('corporates', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('container_id')->constrained('containers')->onDelete('cascade');
-            $table->string('agent_name');
+        Schema::create('activities', function (Blueprint $table) {
+            $table->string('activity_id')->primary();
+            $table->foreignId('ship_id')->constrained('ships');
             $table->dateTime('eta');
             $table->dateTime('etd');
-            $table->enum('status_document', ['nota', 'cancel_pkk']);
-            $table->integer('spum')->nullable();
-            $table->string('ppkb');
             $table->enum('service_code', [
                 'siklus_pelayanan_air', 
                 'siklus_pelayanan_keberangkatan', 
@@ -31,7 +27,6 @@ return new class extends Migration
                 'siklus_pelayanan_pindah', 
                 'siklus_pelayanan_tambat'
             ]);
-            $table->string('pkk_no');
             $table->timestamps();
         });
     }
@@ -43,6 +38,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('corporates');
+        Schema::dropIfExists('activities');
     }
 };
