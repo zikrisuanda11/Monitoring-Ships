@@ -7,13 +7,14 @@ import { Fragment, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import {
   HomeIcon,
-  InboxIcon,
   MenuIcon,
   XIcon,
 } from '@heroicons/react/outline'
+import { GiBigWave } from 'react-icons/gi';
+import { MdOutlineSailing } from 'react-icons/md';
+
 import {
   RiShip2Line,
-  RiTruckLine
 } from "react-icons/ri";
 
 
@@ -29,8 +30,8 @@ function Layout({ children }) {
   const navigation = [
     { name: 'Dashboard', href: '/', icon: HomeIcon, isActive: url === '/' },
     { name: 'Kapal', href: '/ships', icon: RiShip2Line, isActive: url === '/ships' || url === '/ships/create' },
-    { name: 'Kegiatan Kapal', href: '/activities', icon: RiTruckLine, isActive: url === '/activities' || url === '/activities/create' || url === '/activities/id/edit' },
-    { name: 'Armada Kapal', href: '/fleets', icon: InboxIcon, isActive: url === '/fleets' || url === '/fleets/create' },
+    { name: 'Kegiatan Kapal', href: '/activities', icon: GiBigWave, isActive: url === '/activities' || url === '/activities/create' || url === '/activities/id/edit' },
+    { name: 'Armada Kapal', href: '/fleets', icon: MdOutlineSailing, isActive: url === '/fleets' || url === '/fleets/create' },
   ]
   return (
 
@@ -83,7 +84,7 @@ function Layout({ children }) {
                   <div className="flex-shrink-0 flex items-center px-4">
                     <img
                       className="h-8 w-auto"
-                      src="https://tailwindui.com/img/logos/workflow-logo-indigo-600-mark-gray-800-text.svg"
+                      src="assets/image/logo_pelindo.png"
                       alt="Workflow"
                     />
                   </div>
@@ -126,7 +127,7 @@ function Layout({ children }) {
               <div className="flex items-center flex-shrink-0 px-4">
                 <img
                   className="h-8 w-auto"
-                  src="https://tailwindui.com/img/logos/workflow-logo-indigo-600-mark-gray-800-text.svg"
+                  src="assets/image/logo_pelindo.png"
                   alt="Workflow"
                 />
               </div>
