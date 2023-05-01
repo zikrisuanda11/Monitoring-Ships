@@ -28,7 +28,7 @@ function Layout({ children }) {
   const { url } = usePage();
 
   const navigation = [
-    { name: 'Dashboard', href: '/', icon: HomeIcon, isActive: url === '/' },
+    { name: 'Dashboard', href: '/dashboard', icon: HomeIcon, isActive: url === '/' },
     { name: 'Kapal', href: '/ships', icon: RiShip2Line, isActive: url === '/ships' || url === '/ships/create' },
     { name: 'Kegiatan Kapal', href: '/activities', icon: GiBigWave, isActive: url === '/activities' || url === '/activities/create' || url === '/activities/id/edit' },
     { name: 'Armada Kapal', href: '/fleets', icon: MdOutlineSailing, isActive: url === '/fleets' || url === '/fleets/create' },
@@ -84,8 +84,8 @@ function Layout({ children }) {
                   <div className="flex-shrink-0 flex items-center px-4">
                     <img
                       className="h-8 w-auto"
-                      src="assets/image/logo_pelindo.png"
-                      alt="Workflow"
+                      src="/assets/image/logo_pelindo.png"
+                      alt="Pelindo"
                     />
                   </div>
                   <nav className="mt-5 px-2 space-y-1">
@@ -127,8 +127,8 @@ function Layout({ children }) {
               <div className="flex items-center flex-shrink-0 px-4">
                 <img
                   className="h-8 w-auto"
-                  src="assets/image/logo_pelindo.png"
-                  alt="Workflow"
+                  src="/assets/image/logo_pelindo.png"
+                  alt="Pelindo"
                 />
               </div>
               <nav className="mt-5 flex-1 px-2 bg-white space-y-1">

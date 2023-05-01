@@ -1,28 +1,21 @@
+const defaultTheme = require('tailwindcss/defaultTheme');
+
 /** @type {import('tailwindcss').Config} */
-
-const defaultTheme = require('tailwindcss/defaultTheme')
-
 module.exports = {
-  content: [
-    "./resources/**/*.blade.php",
-    "./resources/**/*.jsx",
-  ],
-  theme: {
-    extend: {
-      'input': {
-        '&::-webkit-inner-spin-button, &::-webkit-outer-spin-button': {
-          '-webkit-appearance': 'none',
-          'margin': 0,
+    content: [
+        './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
+        './storage/framework/views/*.php',
+        './resources/views/**/*.blade.php',
+        './resources/js/**/*.jsx',
+    ],
+
+    theme: {
+        extend: {
+            fontFamily: {
+                sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+            },
         },
-      },
     },
-  },
-  plugins: [
-    require('@tailwindcss/forms'),
-  ],
-  theme: {
-    fontFamily: {
-      sans: ['Inter var', ...defaultTheme.fontFamily.sans],
-    }
-  }
-}
+
+    plugins: [require('@tailwindcss/forms')],
+};
