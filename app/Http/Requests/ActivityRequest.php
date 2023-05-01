@@ -6,6 +6,18 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class ActivityRequest extends FormRequest
 {
+    protected $activityId;
+
+    /**
+     * Create a new form request instance.
+     *
+     * @param  int|null  $activityId
+     * @return void
+     */
+    public function __construct($activityId = null)
+    {
+        $this->activityId = $activityId;
+    }
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -24,7 +36,7 @@ class ActivityRequest extends FormRequest
     public function rules()
     {
         return [
-            'activity_id' => 'required|string|unique:activities,activity_id',
+            'activity_id' => 'required|string|unique:activities,activity_id,' . $this->activityId . ',activity_id',
             'ship_id' => 'required|exists:ships,id',
             'eta' => 'required|date',
             'etd' => 'required|date',

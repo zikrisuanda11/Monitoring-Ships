@@ -54,13 +54,13 @@ export default function ShipsCreate({ship, errors }) {
 											onChange={(e) => {
 												setShipName(e.target.value)
 											}}
-											required
+											// required
 											type="text"
 											name="ship_name"
 											id="ship_name"
 											autoComplete="email"
 											className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-											onInvalid={(e) => e.target.setCustomValidity('Nama Kapal Wajib Diisi.')}
+											// onInvalid={(e) => e.target.setCustomValidity('Nama Kapal Wajib Diisi.')}
 										/>
 										{errors.ship_name && (
 											<Alert message={errors.ship_name} />
@@ -81,13 +81,13 @@ export default function ShipsCreate({ship, errors }) {
 											onChange={(e) => {
 												setGrt(e.target.value)
 											}}
-											required
+											// required
 											type="number"
 											name="grt"
 											id="grt"
 											autoComplete="given-name"
 											className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-											onInvalid={(e) => e.target.setCustomValidity('GRT Wajib Diisi.')}
+											// onInvalid={(e) => e.target.setCustomValidity('GRT Wajib Diisi.')}
 										/>
 										{errors.grt && (
 											<Alert message={errors.grt} />
@@ -108,13 +108,13 @@ export default function ShipsCreate({ship, errors }) {
 											onChange={(e) => {
 												setLoa(e.target.value)
 											}}
-											required
+											// required
 											type="number"
 											name="loa"
 											id="loa"
 											autoComplete="family-name"
 											className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-											onInvalid={(e) => e.target.setCustomValidity('LOA Wajib Diisi.')}
+											// onInvalid={(e) => e.target.setCustomValidity('LOA Wajib Diisi.')}
 										/>
 										{errors.loa && (
 											<Alert message={errors.loa} />
@@ -131,13 +131,13 @@ export default function ShipsCreate({ship, errors }) {
 											onChange={(e) => {
 												setAgent(e.target.value)
 											}}
-											required
+											// required
 											type="text"
 											name="agent"
 											id="agent"
 											autoComplete="email"
 											className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-											onInvalid={(e) => e.target.setCustomValidity('Nama Agent Wajib Diisi.')}
+											// onInvalid={(e) => e.target.setCustomValidity('Nama Agent Wajib Diisi.')}
 										/>
 										{errors.agent && (
 											<Alert message={errors.agent} />

@@ -12,14 +12,16 @@ export default function activities({ activities, session }) {
   const rows = activities.map((activity) => ({
     activity_id: activity.activity_id,
     ship_name: activity.ships.ship_name,
+    service_code: activity.service_code,
     eta: activity.eta,
     etd: activity.etd,
     getRowId: activity.activity_id
   }));
 
   const columns = [
-    { field: 'activity_id', headerName: 'Logistik ID', flex: 1 },
+    { field: 'activity_id', headerName: 'Vessel ID', flex: 1 },
     { field: 'ship_name', headerName: 'Nama Kapal', flex: 2 },
+    { field: 'service_code', headerName: 'Service Code', flex: 3 },
     { field: 'eta', headerName: 'ETA', flex: 2},
     { field: 'etd', headerName: 'ETD', flex: 2},
     {

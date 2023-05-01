@@ -62,12 +62,12 @@ export default function ActivityCreate({ ships, errors }) {
 												setActivityId(e.target.value)
 											}}
 											placeholder="Contoh: VS1142"
-											required
+											// required
 											type="text"
 											name="activity_id"
 											id="activity_id"
 											className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-											onInvalid={(e) => e.target.setCustomValidity('Nama Kapal Wajib Diisi.')}
+											// onInvalid={(e) => e.target.setCustomValidity('Nama Kapal Wajib Diisi.')}
 										/>
 										{errors.activity_id && (
 											<Alert message={errors.activity_id} />

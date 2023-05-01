@@ -3,6 +3,7 @@ import React from 'react'
 import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
+import { Inertia, asset } from "@inertiajs/inertia";
 
 const user = {
   name: 'Tom Cook',
@@ -10,16 +11,11 @@ const user = {
   imageUrl:
     'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
 }
-const navigation = [
-  { name: 'Dashboard', href: '#', current: true },
-  { name: 'Team', href: '#', current: false },
-  { name: 'Projects', href: '#', current: false },
-  { name: 'Calendar', href: '#', current: false },
-]
+
 const userNavigation = [
   { name: 'Your Profile', href: '#' },
   { name: 'Settings', href: '#' },
-  { name: 'Sign out', href: '#' },
+  { name: 'Sign out', href: route('logout') },
 ]
 
 function classNames(...classes) {
@@ -29,14 +25,6 @@ function classNames(...classes) {
 export default function Example() {
   return (
     <>
-      {/*
-        This example requires updating your template:
-
-        ```
-        <html class="h-full bg-gray-100">
-        <body class="h-full">
-        ```
-      */}
       <div className="min-h-full">
         <Disclosure as="nav" className="bg-white shadow-sm">
           {({ open }) => (
@@ -47,13 +35,13 @@ export default function Example() {
                     <div className="flex-shrink-0 flex items-center">
                       <img
                         className="block lg:hidden h-8 w-auto"
-                        src="assets/image/logo_pelindo.png"
-                        alt="Workflow"
+                        src="/assets/image/logo_pelindo.png"
+                        alt="Pelindo"
                       />
                       <img
                         className="hidden lg:block h-8 w-auto"
-                        src="assets/image/logo_pelindo.png"
-                        alt="Workflow"
+                        src="/assets/image/logo_pelindo.png"
+                        alt="Pelindo"
                       />
                     </div>
                     <div className="hidden sm:-my-px sm:ml-6 sm:flex sm:space-x-8">
@@ -90,15 +78,31 @@ export default function Example() {
                           {userNavigation.map((item) => (
                             <Menu.Item key={item.name}>
                               {({ active }) => (
-                                <a
-                                  href={item.href}
-                                  className={classNames(
-                                    active ? 'bg-gray-100' : '',
-                                    'block px-4 py-2 text-sm text-gray-700'
-                                  )}
-                                >
-                                  {item.name}
-                                </a>
+                                item.name === 'Sign out' ? (
+                                  <a
+                                    href={item.href}
+                                    onClick={(e) => {
+                                      e.preventDefault();
+                                      Inertia.post(item.href);
+                                    }}
+                                    className={classNames(
+                                      active ? 'bg-gray-100' : '',
+                                      'block px-4 py-2 text-sm text-gray-700'
+                                    )}
+                                  >
+                                    {item.name}
+                                  </a>
+                                ) : (
+                                  <a
+                                    href={item.href}
+                                    className={classNames(
+                                      active ? 'bg-gray-100' : '',
+                                      'block px-4 py-2 text-sm text-gray-700'
+                                    )}
+                                  >
+                                    {item.name}
+                                  </a>
+                                )
                               )}
                             </Menu.Item>
                           ))}

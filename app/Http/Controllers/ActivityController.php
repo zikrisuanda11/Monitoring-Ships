@@ -46,18 +46,6 @@ class ActivityController extends Controller
      */
     public function store(ActivityRequest $request)
     {
-        // $validator = Validator::make($request->all(), [
-        //     'activity_id' => 'required|string|unique:activities,activity_id',
-        //     'ship_id' => 'required|exists:ships,id',
-        //     'eta' => 'required|date',
-        //     'etd' => 'required|date',
-        //     'service_code' => 'required'
-        // ]);
-    
-        // if ($validator->fails()) {
-        //     throw ValidationException::withMessages($validator->errors()->toArray());
-        // }
-
         Activity::create([
             'activity_id' => $request->activity_id,
             'ship_id' => $request->ship_id,
@@ -94,6 +82,8 @@ class ActivityController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $request->validate((new ActivityRequest($id))->rules(), (new ActivityRequest())->messages());
+        
         $activity = Activity::find($id);
         $activity->update([
             'activity_id' => $request->activity_id,

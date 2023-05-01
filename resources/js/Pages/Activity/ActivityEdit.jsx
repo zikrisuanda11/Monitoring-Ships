@@ -63,7 +63,7 @@ export default function ActivityEdit({ships, activity, errors }) {
 												setActivityId(e.target.value)
 											}}
 											placeholder="Contoh: VS1142"
-											required
+											// required
 											type="text"
 											name="activity_id"
 											id="activity_id"

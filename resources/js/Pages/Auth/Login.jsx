@@ -1,6 +1,31 @@
 import React from "react"
+import { useForm } from '@inertiajs/react';
+import { Inertia } from "@inertiajs/inertia";
+import Alert from "../../Components/Alert";
 
-export default function Login() {
+export default function Login({ errors }) {
+  const { data, setData, post, processing } = useForm({
+    email: '',
+    password: '',
+    remember: '',
+  });
+
+
+  const handleOnChange = (event) => {
+    setData(event.target.name, event.target.type === 'checkbox' ? event.target.checked : event.target.value);
+  };
+
+  const submit = (e) => {
+    e.preventDefault();
+
+    Inertia.post('login', {
+      email: data.email,
+      password: data.password,
+      remember: data.remember
+    })
+    // post(route('login'));
+  };
+
   return (
     <>
       <div className="min-h-full flex h-screen bg-blue-50">
@@ -18,13 +43,15 @@ export default function Login() {
 
               <div className="mt-6">
                 <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-                  <form action="#" method="POST" className="space-y-6">
+                  <form onSubmit={submit} className="space-y-6">
                     <div>
                       <label htmlFor="email" className="block text-sm font-medium text-gray-700">
                         Email address
                       </label>
                       <div className="mt-1">
                         <input
+                          onChange={handleOnChange}
+                          value={data.email}
                           id="email"
                           name="email"
                           type="email"
@@ -32,6 +59,9 @@ export default function Login() {
                           required
                           className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                         />
+                        {errors.email && (
+                          <Alert message={errors.email} />
+                        )}
                       </div>
                     </div>
 
@@ -41,6 +71,8 @@ export default function Login() {
                       </label>
                       <div className="mt-1">
                         <input
+                          onChange={handleOnChange}
+                          value={data.password}
                           id="password"
                           name="password"
                           type="password"
@@ -57,6 +89,8 @@ export default function Login() {
                           id="remember-me"
                           name="remember-me"
                           type="checkbox"
+                          value={data.remember}
+                          onChange={handleOnChange}
                           className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
                         />
                         <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900">
@@ -64,11 +98,11 @@ export default function Login() {
                         </label>
                       </div>
 
-                      <div className="text-sm">
+                      {/* <div className="text-sm">
                         <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
                           Forgot your password?
                         </a>
-                      </div>
+                      </div> */}
                     </div>
 
                     <div>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ShipRequest;
 use App\Models\Ship;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -22,19 +23,8 @@ class ShipController extends BaseController
         return inertia('Ships/ShipsCreate');
     }
 
-    public function store(Request $request)
+    public function store(ShipRequest $request)
     {
-        $validator = Validator::make($request->all(), [
-            'ship_name' => 'required|string',
-            'grt' => 'required|integer',
-            'loa' => 'required|numeric',
-            'agent' => 'required|string'
-        ]);
-
-        if ($validator->fails()) {
-            return $validator->errors();
-        }
-
         Ship::create([
             'ship_name' => $request->ship_name,
             'grt' => $request->grt,
@@ -56,14 +46,9 @@ class ShipController extends BaseController
 
     public function update(Request $request, $id)
     {
-        $ship = Ship::find($id);
+        $request->validate((new ShipRequest($id))->rules(), (new ShipRequest())->messages());
 
-        Validator::make($request->all(), [
-            'ship_name' => 'required|string',
-            'grt' => 'required|integer',
-            'loa' => 'required|numeric',
-            'agent' => 'required|string'
-        ]);
+        $ship = Ship::find($id);
 
         $ship->update([
             'ship_name' => $request->ship_name,
