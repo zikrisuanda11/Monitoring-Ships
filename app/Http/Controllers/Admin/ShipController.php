@@ -1,26 +1,27 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\ShipRequest;
 use App\Models\Ship;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 
-class ShipController extends BaseController
+class ShipController extends Controller
 {
     public function index()
     {
         $ships = Ship::all();
-        // return response()->json($ships, );
-        return inertia('Ships/Ships', [
-            'ships' => $ships
+        return inertia('Admin/Ships/Ships', [
+            'ships' => $ships,
+            'user' => Auth::user()
         ]);
     }
 
     public function create()
     {
-        return inertia('Ships/ShipsCreate');
+        return inertia('Admin/Ships/ShipsCreate');
     }
 
     public function store(ShipRequest $request)
@@ -32,13 +33,13 @@ class ShipController extends BaseController
             'agent' => $request->agent
         ]);
 
-        return redirect()->route('ships.index')->with('success', 'Data Berhasil di Simpan');
+        return redirect()->route('admin.ships.index')->with('success', 'Data Berhasil di Simpan');
     }
 
     public function edit($id)
     {
         $ship = Ship::find($id);
-        return inertia('Ships/ShipEdit', [
+        return inertia('Admin/Ships/ShipEdit', [
             'ship' => $ship
         ]);
         
@@ -57,7 +58,7 @@ class ShipController extends BaseController
             'agent' => $request->agent
         ]);
 
-        return redirect()->route('ships.index')->with('success', 'Data Berhasil di Update');
+        return redirect()->route('admin.ships.index')->with('success', 'Data Berhasil di Update');
     }
 
     public function destroy($id)
@@ -65,6 +66,6 @@ class ShipController extends BaseController
         $ship = Ship::find($id);
         $ship->delete();
 
-        return redirect()->route('ships.index')->with('success', 'Data Berhasil di Hapus');
+        return redirect()->route('admin.ships.index')->with('success', 'Data Berhasil di Hapus');
     }
 }

@@ -49,7 +49,7 @@ class ActivityRequest extends FormRequest
         return [
             'activity_id.required' => 'Vessel ID tidak boleh kosong',
             'activity_id.unique' => 'Vessel ID telah digunakan',
-            'ship_id.required' => 'ID Kapal Tidak boleh kosong',
+            'ship_id.required' => 'ID Kapal tidak boleh kosong',
             'eta.required' => 'ETA tidak boleh kosong',
             'etd.required' => 'ETD tidak boleh kosong',
             'service_code.required' => 'Service Code tidak boleh kosong'

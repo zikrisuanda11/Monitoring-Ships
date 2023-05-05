@@ -14,6 +14,10 @@ use Inertia\Response;
 
 class AuthenticatedSessionController extends Controller
 {
+    public function login()
+    {
+        return inertia('Auth/Login');
+    }
     /**
      * Display the login view.
      */

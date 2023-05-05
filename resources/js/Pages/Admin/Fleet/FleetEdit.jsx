@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import Layout from "../../Layouts/Default";
 import { Inertia } from '@inertiajs/inertia';
-import Alert from "../../Components/Alert";
-import SelectStatusDocEdit from "../../Components/Selects/SelectStatusDocEdit";
-import SelectVesselEdit from "../../Components/Selects/SelectVesselEdit";
+import Alert from "@/Components/Alert";
+import SelectStatusDocEdit from "@/Components/Selects/SelectStatusDocEdit";
+import SelectVesselEdit from "@/Components/Selects/SelectVesselEdit";
 
-export default function FleetEdit({ fleet, activities, errors }) {
+export default function FleetEdit({ fleet, activities, errors, user }) {
 	const [activity_id, setActivityId] = useState(fleet.activity_id);
 	const [status_doc, setStatusDoc] = useState(fleet.status_doc);
 	const [pkk_no, setPkkNo] = useState(fleet.pkk_no);
@@ -14,7 +14,7 @@ export default function FleetEdit({ fleet, activities, errors }) {
 	const storeFleet = async (e) => {
 		e.preventDefault();
 
-		Inertia.put(`/fleets/${fleet.id}`, {
+		Inertia.put(`/admin/fleets/${fleet.id}`, {
 			activity_id: activity_id,
 			status_doc: status_doc,
 			pkk_no: pkk_no,
@@ -27,11 +27,11 @@ export default function FleetEdit({ fleet, activities, errors }) {
 		setStatusDoc("");
 		setPkkNo("");
 		setPpkb("");
-		Inertia.visit('/fleets');
+		Inertia.visit('/admin/fleets');
 	};
 
 	return (
-		<Layout>
+		<Layout user={user}>
 			<div className="space-y-6">
 
 				<div className="bg-white shadow px-4 py-5 sm:rounded-lg sm:p-6">

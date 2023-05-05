@@ -1,26 +1,27 @@
 import React, { useState } from "react";
 import Layout from "../../Layouts/Default";
-import PopoverHover from "../../Components/Popover";
+import PopoverHover from "@/Components/Popover";
 import { Inertia } from '@inertiajs/inertia';
 import {
 	RiErrorWarningFill
 } from "react-icons/ri";
-import Alert from "../../Components/Alert";
+import Alert from "@/Components/Alert";
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
-import SelectShip from "../../Components/Selects/SelectShip";
-import SelectServiceCode from "../../Components/Selects/SelectServiceCode";
+import SelectShipEdit from "@/Components/Selects/SelectShipEdit";
+import SelectServiceCodeEdit from "@/Components/Selects/SelectServiceCodeEdit";
+import dayjs, { Dayjs } from 'dayjs';
 
-export default function ActivityCreate({ ships, errors }) {
-	const [activity_id, setActivityId] = useState('');
-	const [ship_id, setShipId] = useState('');
-	const [eta, setEta] = useState('');
-	const [etd, setEtd] = useState('');
-	const [service_code, setServiceCode] = useState('');
+export default function ActivityEdit({ships, activity, errors, user }) {
+	const [activity_id, setActivityId] = useState(activity.activity_id);
+	const [ship_id, setShipId] = useState(activity.ship_id);
+	const [eta, setEta] = useState(dayjs(activity.eta));
+	const [etd, setEtd] = useState(dayjs(activity.etd));
+	const [service_code, setServiceCode] = useState(activity.service_code);
 
-	const storeActivity = async (e) => {
+	const updateActivity = async (e) => {
 		e.preventDefault();
 
-		Inertia.post('/activities', {
+		Inertia.put(`/admin/activities/${activity.activity_id}`, {
 			activity_id: activity_id,
 			ship_id: ship_id,
 			eta: eta,
@@ -35,11 +36,11 @@ export default function ActivityCreate({ ships, errors }) {
 		setEta("");
 		setEtd("");
 		setServiceCode("");
-		Inertia.visit('/activities');
+		Inertia.visit('/admin/activities');
 	};
 
 	return (
-		<Layout>
+		<Layout user={user}>
 			<div className="space-y-6">
 
 				<div className="bg-white shadow px-4 py-5 sm:rounded-lg sm:p-6">
@@ -49,7 +50,7 @@ export default function ActivityCreate({ ships, errors }) {
 							<p className="mt-1 text-sm text-gray-500">Tambahkan informasi aktifitas kapal.</p>
 						</div>
 						<div className="mt-5 md:mt-0 md:col-span-2">
-							<form onSubmit={storeActivity}>
+							<form onSubmit={updateActivity}>
 								<div className="grid grid-cols-6 gap-6">
 									<div className="col-span-6 sm:col-span-6">
 										<label htmlFor="activity_id" className="text-sm font-medium text-gray-700 flex">
@@ -67,7 +68,7 @@ export default function ActivityCreate({ ships, errors }) {
 											name="activity_id"
 											id="activity_id"
 											className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-											// onInvalid={(e) => e.target.setCustomValidity('Nama Kapal Wajib Diisi.')}
+											onInvalid={(e) => e.target.setCustomValidity('Nama Kapal Wajib Diisi.')}
 										/>
 										{errors.activity_id && (
 											<Alert message={errors.activity_id} />
@@ -78,12 +79,8 @@ export default function ActivityCreate({ ships, errors }) {
 										<label htmlFor="ship_id" className="text-sm font-medium text-gray-700 relative flex">
 											Nama Kapal
 											<span className="text-red-500 text-sm mx-1"> *</span>
-											<PopoverHover
-												trigger={<RiErrorWarningFill size={12} />}
-												content={<div>Gross Register Tonnage: pengukuran kapasitas kapal yang digunakan untuk menghitung ukuran kapal secara kasar.</div>}
-											/>
 										</label>
-										<SelectShip onDataChange={setShipId} datas={ships}></SelectShip>
+										<SelectShipEdit onDataChange={setShipId} ships={ships} activity={activity} />
 										{errors.ship_id && (
 											<Alert message={errors.ship_id} />
 										)}
@@ -93,7 +90,8 @@ export default function ActivityCreate({ ships, errors }) {
 											Service Code
 											<span className="text-red-500 text-sm mx-1"> *</span>
 										</label>
-										<SelectServiceCode
+										<SelectServiceCodeEdit
+											activity={activity}
 											onDataChange={setServiceCode}
 											values={[
 												{ key: "siklus_pelayanan_air", name: "Siklus Pelayanan Air" },
@@ -119,6 +117,7 @@ export default function ActivityCreate({ ships, errors }) {
 											/>
 										</label>
 										<DateTimePicker
+											defaultValue={dayjs(activity.eta)}
 											sx={{
 												width: '100%'
 											}}
@@ -143,6 +142,7 @@ export default function ActivityCreate({ ships, errors }) {
 											/>
 										</label>
 										<DateTimePicker
+											defaultValue={dayjs(activity.etd)}
 											sx={{
 												width: '100%'
 											}}

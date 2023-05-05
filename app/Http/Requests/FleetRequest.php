@@ -34,10 +34,10 @@ class FleetRequest extends FormRequest
     public function messages()
     {
         return [
-            'activity_id.required' => 'Vessel ID Harus Di isi.',
-            'status_doc.required' => 'Status Dokumen Harus Di isi.',
-            'pkk_no.required' => 'PKK NO Harus Di isi.',
-            'ppkb.required' => 'PPKB Harus Di isi.'
+            'activity_id.required' => 'Vessel ID tidak boleh kosong.',
+            'status_doc.required' => 'Status Dokumen tidak boleh kosong.',
+            'pkk_no.required' => 'PKK NO tidak boleh kosong.',
+            'ppkb.required' => 'PPKB tidak boleh kosong.'
         ];
     }
 }

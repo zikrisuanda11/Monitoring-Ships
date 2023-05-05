@@ -1,7 +1,7 @@
 import React from "react"
 import { useForm } from '@inertiajs/react';
 import { Inertia } from "@inertiajs/inertia";
-import Alert from "../../Components/Alert";
+import Alert from "@/Components/Alert";
 
 export default function Login({ errors }) {
   const { data, setData, post, processing } = useForm({
