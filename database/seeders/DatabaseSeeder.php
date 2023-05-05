@@ -10,6 +10,7 @@ use App\Models\Fleet;
 use App\Models\Logistic;
 use App\Models\Ship;
 use Illuminate\Database\Seeder;
+use Illuminate\Notifications\Action;
 
 class DatabaseSeeder extends Seeder
 {
@@ -26,9 +27,12 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
-        // $this->call(UserSeeder::class);
-        Ship::factory()->count(25)->create();
-        Activity::factory()->count(25)->create();
-        Fleet::factory()->count(25)->create();
+        $this->call([
+            RoleSeeder::class,
+            UserSeeder::class,
+            ShipSeeder::class,
+            ActivitySeeder::class,
+            FleetSeeder::class,
+        ]);
     }
 }

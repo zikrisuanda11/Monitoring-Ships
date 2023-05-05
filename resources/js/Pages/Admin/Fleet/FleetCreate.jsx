@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import Layout from "../../Layouts/Default";
 import { Inertia } from '@inertiajs/inertia';
-import Alert from "../../Components/Alert";
-import SelectVessel from "../../Components/Selects/SelectVessel";
-import SelectStatusDoc from "../../Components/Selects/SelectStatusDoc";
+import Alert from "@/Components/Alert";
+import SelectVessel from "@/Components/Selects/SelectVessel";
+import SelectStatusDoc from "@/Components/Selects/SelectStatusDoc";
 
-export default function FleetCreate({ activities, errors }) {
+export default function FleetCreate({ activities, errors, user }) {
 	const [activity_id, setActivityId] = useState('');
 	const [status_doc, setStatusDoc] = useState('');
 	const [pkk_no, setPkkNo] = useState('');
@@ -14,7 +14,7 @@ export default function FleetCreate({ activities, errors }) {
 	const storeFleet = async (e) => {
 		e.preventDefault();
 
-		Inertia.post('/fleets', {
+		Inertia.post('/admin/fleets', {
 			activity_id: activity_id,
 			status_doc: status_doc,
 			pkk_no: pkk_no,
@@ -27,11 +27,11 @@ export default function FleetCreate({ activities, errors }) {
 		setStatusDoc("");
 		setPkkNo("");
 		setPpkb("");
-		Inertia.visit('/fleets');
+		Inertia.visit('/admin/fleets');
 	};
 
 	return (
-		<Layout>
+		<Layout user={user}>
 			<div className="space-y-6">
 
 				<div className="bg-white shadow px-4 py-5 sm:rounded-lg sm:p-6">

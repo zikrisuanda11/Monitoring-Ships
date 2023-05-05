@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import Layout from "../../Layouts/Default";
-import PopoverHover from "../../Components/Popover";
+import PopoverHover from "@/Components/Popover";
 import { Inertia } from '@inertiajs/inertia';
 import {
 	RiErrorWarningFill
 } from "react-icons/ri";
-import Alert from "../../Components/Alert";
+import Alert from "@/Components/Alert";
 
-export default function ShipsCreate({ship, errors }) {
+export default function ShipsCreate({ship, errors, user }) {
 	const [ship_name, setShipName] = useState(ship.ship_name);
 	const [grt, setGrt] = useState(ship.grt);
 	const [loa, setLoa] = useState(ship.loa);
@@ -16,7 +16,7 @@ export default function ShipsCreate({ship, errors }) {
 	const updateShip = async (e) => {
 		e.preventDefault();
 
-		Inertia.put(`/ships/${ship.id}`, {
+		Inertia.put(`/admin/ships/${ship.id}`, {
 			ship_name: ship_name,
 			grt: grt,
 			loa: loa,
@@ -29,10 +29,10 @@ export default function ShipsCreate({ship, errors }) {
     setGrt("");
     setLoa("");
     setAgent("");
-    Inertia.visit('/ships');
+    Inertia.visit('/admin/ships');
   };
 	return (
-		<Layout>
+		<Layout user={user}>
 			<div className="space-y-6">
 
 				<div className="bg-white shadow px-4 py-5 sm:rounded-lg sm:p-6">

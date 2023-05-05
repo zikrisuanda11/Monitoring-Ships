@@ -48,8 +48,8 @@ class ShipRequest extends FormRequest
         return [
             'ship_name.required' => 'Nama Kapal tidak boleh kosong',
             'ship_name.unique' => 'Nama Kapal telah digunakan',
-            'grt.required' => 'GRT Tidak boleh kosong',
-            'loa.required' => 'LOA Tidak boleh kosong',
+            'grt.required' => 'GRT tidak boleh kosong',
+            'loa.required' => 'LOA tidak boleh kosong',
             'agent.required' => 'Nama Agent tidak boleh kosong',
         ];
     }

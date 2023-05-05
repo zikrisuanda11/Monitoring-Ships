@@ -1,39 +1,40 @@
 import React from "react";
 import { InertiaLink } from '@inertiajs/inertia-react';
 import Layout from "../../Layouts/Default";
-import SuccessAlert from "../../Components/SuccessAlert";
+import SuccessAlert from "@/Components/SuccessAlert";
 import {
   RiEditLine,
   RiDeleteBin2Line
 } from "react-icons/ri";
 import { DataGrid } from "@mui/x-data-grid";
 
-export default function Ships({ ships, session }) {
-  const rows = ships.map((ship) => ({
-    id: ship.id,
-    ship_name: ship.ship_name,
-    grt: ship.grt,
-    loa: ship.loa,
-    agent: ship.agent,
+export default function Fleet({ fleets, session, user }) {
+  const rows = fleets.map((fleet) => ({
+    id: fleet.id,
+    activity_id: fleet.activity_id,
+    status_doc: fleet.status_doc,
+    pkk_no: fleet.pkk_no,
+    ppkb: fleet.ppkb,
+    getRowId: fleet.id
   }));
 
   const columns = [
-    { field: 'id', headerName: 'ID', flex: 1 },
-    { field: 'ship_name', headerName: 'Nama Kapal',flex: 3 },
-    { field: 'grt', headerName: 'GRT', flex: 1 },
-    { field: 'loa', headerName: 'LOA', flex: 1 },
-    { field: 'agent', headerName: 'Agent', flex: 3 },
+    { field: 'id', headerName: 'ID Armada', flex: 1 },
+    { field: 'activity_id', headerName: 'ID Vessel', flex: 2 },
+    { field: 'status_doc', headerName: 'Status Document', flex: 2 },
+    { field: 'pkk_no', headerName: 'PKK No', flex: 2 },
+    { field: 'ppkb', headerName: 'PPKB', flex: 2 },
     {
-      sortable:false,
-      field: 'action',
+      sortable: false,
+      field: 'getRowId',
       headerName: 'Actions',
       flex: 1,
       renderCell: (params) => (
         <>
-          <InertiaLink as="button" key={`edit-${params.row.id}`} href={`/ships/${params.row.id}/edit`}>
+          <InertiaLink as="button" key={`edit-${params.row.id}`} href={`/admin/fleets/${params.row.id}/edit`}>
             <RiEditLine size={18} className="text-indigo-600 hover:text-indigo-900 mx-1" />
           </InertiaLink>
-          <InertiaLink as="button" method="delete" key={`delete-${params.row.id}`} href={`/ships/${params.row.id}`}>
+          <InertiaLink as="button" method="delete" key={`delete-${params.row.id}`} href={`/admin/fleets/${params.row.id}`}>
             <RiDeleteBin2Line size={18} className="text-indigo-600 hover:text-indigo-900 mx-1" />
           </InertiaLink>
         </>
@@ -41,10 +42,8 @@ export default function Ships({ ships, session }) {
     },
   ];
 
-
-
   return (
-    <Layout>
+    <Layout user={user}>
       {session.success && (
         <SuccessAlert
           message={session.success}
@@ -53,9 +52,9 @@ export default function Ships({ ships, session }) {
       <div className="px-4 sm:px-6 lg:px-8">
         <div className="sm:flex sm:items-center">
           <div className="sm:flex-auto">
-            <h1 className="text-xl font-semibold text-gray-900">Ships</h1>
+            <h1 className="text-xl font-semibold text-gray-900">Data Armada Kapal</h1>
             <p className="mt-2 text-sm text-gray-500">
-              List nama kapal, GRT(Gross Register Tonnage), LOA(Length Over All), dan nama Agent.
+              List Vessel ID, Status Dokumen, PKK No dan PPKB
             </p>
           </div>
           <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
@@ -64,7 +63,7 @@ export default function Ships({ ships, session }) {
               className="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
             >
               <InertiaLink
-                href="/ships/create"
+                href="/admin/fleets/create"
                 className="w-full"
                 tabIndex="-1"
                 method="get"
@@ -80,7 +79,7 @@ export default function Ships({ ships, session }) {
               <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
                 <div style={{ height: 480, width: '100%' }}>
                   <DataGrid
-                    getRowId={rows.id}
+                    getRowId={(row) => row.activity_id}
                     rows={rows}
                     columns={columns}
                     pageSize={5}

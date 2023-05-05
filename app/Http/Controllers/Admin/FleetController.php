@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\FleetRequest;
 use App\Models\Activity;
 use App\Models\Fleet;
@@ -17,8 +18,7 @@ class FleetController extends Controller
     public function index()
     {
         $fleets = Fleet::with('activity')->get();
-        // return response()->json($fleets);
-        return inertia('Fleet/Fleet', [
+        return inertia('Admin/Fleet/Fleet', [
             'fleets' => $fleets
         ]);
     }
@@ -31,7 +31,7 @@ class FleetController extends Controller
     public function create()
     {
         $activities = Activity::whereNotIn('activity_id', Fleet::pluck('activity_id'))->get();
-        return inertia('Fleet/FleetCreate', [
+        return inertia('Admin/Fleet/FleetCreate', [
             'activities' => $activities
         ]);
     }
@@ -51,7 +51,7 @@ class FleetController extends Controller
             'ppkb' => $request->ppkb
         ]);
 
-        return redirect()->route('fleets.index')->with('success', 'Data Berhasil di Simpan');
+        return redirect()->route('admin.fleets.index')->with('success', 'Data Berhasil di Simpan');
     }
 
 
@@ -65,7 +65,7 @@ class FleetController extends Controller
     {
         $activities = Activity::whereNotIn('activity_id', Fleet::pluck('activity_id'))->get();
         $fleet = Fleet::find($id);
-        return inertia('Fleet/FleetEdit', [
+        return inertia('Admin/Fleet/FleetEdit', [
             'activities' => $activities,
             'fleet' => $fleet
         ]);
@@ -88,7 +88,7 @@ class FleetController extends Controller
             'ppkb' => $request->ppkb
         ]);
 
-        return redirect()->route('fleets.index')->with('success', 'Data Berhasil di Ubah');
+        return redirect()->route('admin.fleets.index')->with('success', 'Data Berhasil di Ubah');
     }
 
     /**
@@ -101,6 +101,6 @@ class FleetController extends Controller
     {
         $fleet = Fleet::find($id);
         $fleet->delete();
-        return redirect()->route('fleets.index')->with('success', 'Data Berhasil di Hapus');
+        return redirect()->route('admin.fleets.index')->with('success', 'Data Berhasil di Hapus');
     }
 }

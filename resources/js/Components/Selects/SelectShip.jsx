@@ -10,11 +10,17 @@ function classNames(...classes) {
 
 export default function SelectShip({ onDataChange, datas }) {
 	const [selected, setSelected] = useState("")
+	const [filterValue, setFilterValue] = useState("")
+	console.log(datas);
 
 	const handleSelectChange = newValue => {
 		setSelected(newValue);
 		onDataChange(newValue);
 	}
+
+	const filteredData = datas.filter((data) => {
+		data.ship_name.toLowerCase().includes(filterValue.toLowerCase())
+	})
 
 	return (
 		<Listbox value={selected} onChange={handleSelectChange}>

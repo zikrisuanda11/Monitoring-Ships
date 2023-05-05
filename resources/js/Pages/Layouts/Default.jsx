@@ -2,7 +2,7 @@ import React from 'react';
 import { usePage, InertiaLink } from '@inertiajs/inertia-react';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
-import Navbar from '../Components/Navbar';
+import Navbar from '@/Components/Navbar';
 import { Fragment, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import {
@@ -10,6 +10,7 @@ import {
   MenuIcon,
   XIcon,
 } from '@heroicons/react/outline'
+import { BiUserCircle } from 'react-icons/bi';
 import { GiBigWave } from 'react-icons/gi';
 import { MdOutlineSailing } from 'react-icons/md';
 
@@ -17,22 +18,36 @@ import {
   RiShip2Line,
 } from "react-icons/ri";
 
-
-
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-function Layout({ children }) {
+export default function Layout({ children, user }) {
+
+  // 
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const { url } = usePage();
 
-  const navigation = [
+  const navigationAdmin = [
     { name: 'Dashboard', href: '/dashboard', icon: HomeIcon, isActive: url === '/' },
-    { name: 'Kapal', href: '/ships', icon: RiShip2Line, isActive: url === '/ships' || url === '/ships/create' },
-    { name: 'Kegiatan Kapal', href: '/activities', icon: GiBigWave, isActive: url === '/activities' || url === '/activities/create' || url === '/activities/id/edit' },
-    { name: 'Armada Kapal', href: '/fleets', icon: MdOutlineSailing, isActive: url === '/fleets' || url === '/fleets/create' },
+    { name: 'Data Kapal', href: '/admin/ships', icon: RiShip2Line, isActive: url === '/admin/ships' || url === '/admin/ships/create' },
+    { name: 'Data Kegiatan Kapal', href: '/admin/activities', icon: GiBigWave, isActive: url === '/admin/activities' || url === '/admin/activities/create' || url === '/activities/id/edit' },
+    { name: 'Data Armada Kapal', href: '/admin/fleets', icon: MdOutlineSailing, isActive: url === '/admin/fleets' || url === '/admin/fleets/create' },
   ]
+
+  const navigationManager = [
+    { name: 'Dashboard', href: '/dashboard', icon: HomeIcon, isActive: url === '/' },
+    { name: 'Data Kapal', href: '/manager/ships', icon: RiShip2Line, isActive: url === '/manager/ships' },
+    { name: 'Data Tenaga Kerja', href: '/manager/users', icon: BiUserCircle, isActive: url === '/manager/users' || url === '/manager/users/create' },
+    { name: 'Data Kegiatan Kapal', href: '/manager/activities', icon: GiBigWave, isActive: url === '/manager/activities' },
+    { name: 'Data Armada Kapal', href: '/manager/fleets', icon: MdOutlineSailing, isActive: url === '/manager/fleets'},
+  ]
+
+  const isAdmin = user.roles.find(role => role.name === 'admin');
+  const navigation = isAdmin ? navigationAdmin : navigationManager;
+
+  // 
+
   return (
 
     <>
@@ -186,5 +201,3 @@ function Layout({ children }) {
   )
 
 }
-
-export default Layout

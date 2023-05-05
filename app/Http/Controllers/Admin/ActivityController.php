@@ -1,14 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\ActivityRequest;
 use DateTime;
 use App\Models\Ship;
 use App\Models\Activity;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\ValidationException;
 
 class ActivityController extends Controller
 {
@@ -20,7 +19,7 @@ class ActivityController extends Controller
     public function index()
     {
         $data = Activity::with('ships')->get();
-        return inertia('Activity/Activity', [
+        return inertia('Admin/Activity/Activity', [
             'activities' => $data
         ]);
     }
@@ -33,7 +32,7 @@ class ActivityController extends Controller
     public function create()
     {
         $ships = Ship::all();
-        return inertia('Activity/ActivityCreate', [
+        return inertia('Admin/Activity/ActivityCreate', [
             'ships' => $ships,
         ]);
     }
@@ -54,7 +53,7 @@ class ActivityController extends Controller
             'service_code' => $request->service_code
         ]);
 
-        return redirect()->route('activities.index')->with('success', 'Data Berhasil di Simpan');
+        return redirect()->route('admin.activities.index')->with('success', 'Data Berhasil di Simpan');
     }
 
     /**
@@ -67,7 +66,7 @@ class ActivityController extends Controller
     {
         $ships = Ship::all();
         $activity = Activity::find($id);
-        return inertia('Activity/ActivityEdit', [
+        return inertia('Admin/Activity/ActivityEdit', [
             'ships' => $ships,
             'activity' => $activity
         ]);
@@ -93,7 +92,7 @@ class ActivityController extends Controller
             'service_code' => $request->service_code
         ]);
 
-        return redirect()->route('activities.index')->with('success', 'Data Berhasil di Update');
+        return redirect()->route('admin.activities.index')->with('success', 'Data Berhasil di Update');
 
     }
 
@@ -108,6 +107,6 @@ class ActivityController extends Controller
         $activity = Activity::find($id);
         $activity->delete();
 
-        return redirect()->route('activities.index')->with('success', 'Data Berhasil di Hapus');
+        return redirect()->route('admin.activities.index')->with('success', 'Data Berhasil di Hapus');
     }
 }
