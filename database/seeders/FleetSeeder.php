@@ -15,6 +15,21 @@ class FleetSeeder extends Seeder
      */
     public function run()
     {
-        Fleet::factory()->count(25)->create();
+        Fleet::factory()
+            ->count(12)
+            ->maret()
+            ->create();
+
+        // Memanggil state 'april' pada FleetFactory
+        Fleet::factory()
+            ->count(20)
+            ->april()
+            ->create();
+
+        // Memanggil state 'mei' pada FleetFactory
+        Fleet::factory()
+            ->count(15)
+            ->mei()
+            ->create();
     }
 }

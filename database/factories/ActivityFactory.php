@@ -2,8 +2,9 @@
 
 namespace Database\Factories;
 
-use App\Models\Document;
+use Carbon\Carbon;
 use App\Models\Ship;
+use App\Models\Document;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -29,11 +30,37 @@ class ActivityFactory extends Factory
         ]);
 
         return [
-            'activity_id' => 'VS'. fake()->randomNumber(4),
+            'activity_id' => 'VS'. fake()->randomNumber(5, true),
             'ship_id' => Ship::pluck('id')->random(),
-            'eta' => fake()->dateTime(),
-            'etd' => fake()->dateTime(),
+            'eta' => Carbon::createFromDate(2023, fake()->numberBetween(3, 5), fake()->numberBetween(1, 30)),
+            'etd' => Carbon::createFromDate(2023, fake()->numberBetween(3, 5), fake()->numberBetween(1, 30)),
             'service_code' => $service_code->random()
         ];
+    }
+
+    public function maret()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'created_at' => Carbon::createFromDate(2023, 3, 1),
+            ];
+        });
+    }
+
+    public function april()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'created_at' => Carbon::createFromDate(2023, 4, 1),
+            ];
+        });
+    }
+    public function mei()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'created_at' => Carbon::createFromDate(2023, 5, 1),
+            ];
+        });
     }
 }

@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('fleets', function (Blueprint $table) {
             $table->id();
             $table->string('activity_id')->unique();
-            $table->foreign('activity_id')->on('activities')->references('activity_id');
+            $table->foreign('activity_id')->on('activities')->references('activity_id')->onDelete('cascade');
             $table->enum('status_doc', [
                 'nota',
                 'cancel_pkk',

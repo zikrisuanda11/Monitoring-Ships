@@ -7,9 +7,9 @@ import {
 } from "react-icons/ri";
 import Alert from "@/Components/Alert";
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
-import SelectShipEdit from "@/Components/Selects/SelectShipEdit";
 import SelectServiceCodeEdit from "@/Components/Selects/SelectServiceCodeEdit";
-import dayjs, { Dayjs } from 'dayjs';
+import dayjs from 'dayjs';
+import ComboboxShip from "@/Components/ComboboxShip";
 
 export default function ActivityEdit({ships, activity, errors, user }) {
 	const [activity_id, setActivityId] = useState(activity.activity_id);
@@ -80,7 +80,8 @@ export default function ActivityEdit({ships, activity, errors, user }) {
 											Nama Kapal
 											<span className="text-red-500 text-sm mx-1"> *</span>
 										</label>
-										<SelectShipEdit onDataChange={setShipId} ships={ships} activity={activity} />
+										{/* <SelectShipEdit onDataChange={setShipId} ships={ships} activity={activity} /> */}
+										<ComboboxShip onDataChange={setShipId} datas={ships} activity={activity}/>
 										{errors.ship_id && (
 											<Alert message={errors.ship_id} />
 										)}

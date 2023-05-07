@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use Carbon\Carbon;
 use App\Models\Activity;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -37,5 +38,31 @@ class FleetFactory extends Factory
             'pkk_no' => 'PKK.DN.IDBPN.2011' . fake()->randomNumber(6),
             'status_doc' => $status_doc->random()
         ];
+    }
+
+    public function maret()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'created_at' => Carbon::createFromDate(2023, 3, 1),
+            ];
+        });
+    }
+
+    public function april()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'created_at' => Carbon::createFromDate(2023, 4, 1),
+            ];
+        });
+    }
+    public function mei()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'created_at' => Carbon::createFromDate(2023, 5, 1),
+            ];
+        });
     }
 }

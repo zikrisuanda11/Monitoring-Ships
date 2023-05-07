@@ -4,6 +4,7 @@ import { Inertia } from '@inertiajs/inertia';
 import Alert from "@/Components/Alert";
 import SelectStatusDocEdit from "@/Components/Selects/SelectStatusDocEdit";
 import SelectVesselEdit from "@/Components/Selects/SelectVesselEdit";
+import ComboboxVessel from "@/Components/ComboboxVessel";
 
 export default function FleetEdit({ fleet, activities, errors, user }) {
 	const [activity_id, setActivityId] = useState(fleet.activity_id);
@@ -111,11 +112,16 @@ export default function FleetEdit({ fleet, activities, errors, user }) {
 											Vessel ID
 											<span className="text-red-500 text-sm mx-1"> *</span>
 										</label>
-                    <SelectVesselEdit
+										<ComboboxVessel
+											onDataChange={setActivityId}
+											activities={activities}
+											fleet={fleet}
+										/>
+                    {/* <SelectVesselEdit
 											fleet={fleet}
                       onDataChange={setActivityId}
                       activities={activities}
-                    />
+                    /> */}
 										{errors.activity_id && (
 											<Alert message={errors.activity_id} />
 										)}

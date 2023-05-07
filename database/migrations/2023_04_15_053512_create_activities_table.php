@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('activities', function (Blueprint $table) {
             $table->string('activity_id')->primary();
-            $table->foreignId('ship_id')->constrained('ships');
+            $table->foreignId('ship_id')->constrained('ships')->onDelete('cascade');
             $table->dateTime('eta');
             $table->dateTime('etd');
             $table->enum('service_code', [

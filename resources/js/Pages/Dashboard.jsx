@@ -1,41 +1,18 @@
 import React from "react";
 import Layout from "./Layouts/Default";
 import { ArrowSmDownIcon, ArrowSmUpIcon } from '@heroicons/react/solid'
+import Chartjs from "@/Components/Chartjs";
 
-const stats = [
-  { name: 'Total Subscribers', stat: '71,897', previousStat: '70,946', change: '12%', changeType: 'increase' },
-  { name: 'Avg. Open Rate', stat: '58.16%', previousStat: '56.14%', change: '2.02%', changeType: 'increase' },
-  { name: 'Avg. Click Rate', stat: '24.57%', previousStat: '28.62%', change: '4.05%', changeType: 'decrease' },
-]
-
-const statusStyles = {
-  success: 'bg-green-100 text-green-800',
-  processing: 'bg-yellow-100 text-yellow-800',
-  failed: 'bg-gray-100 text-gray-800',
-}
-
-const transactions = [
-  {
-    id: 1,
-    name: 'Payment to Molly Sanders',
-    href: '#',
-    amount: '$20,000',
-    currency: 'USD',
-    status: 'success',
-    date: 'July 11, 2020',
-    datetime: '2020-07-11',
-  },
-  // More transactions...
-]
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function Dashboard({user}) {
-  
+export default function Dashboard({ user, stats, charts }) {
+
+  console.log(charts);
   return (
     <Layout user={user}>
-      <div>
+      <div className="mx-8">
         <h3 className="text-lg leading-6 font-medium text-gray-900">Last 30 days</h3>
         <dl className="mt-5 grid grid-cols-1 rounded-lg bg-white overflow-hidden shadow divide-y divide-gray-200 md:grid-cols-3 md:divide-y-0 md:divide-x">
           {stats.map((item) => (
@@ -72,8 +49,21 @@ export default function Dashboard({user}) {
             </div>
           ))}
         </dl>
+        <div className="container mt-10 grid grid-cols-2 gap-7">
+          <div className="">
+            <Chartjs charts={charts[2].etd} label={charts[2].label}/>
+          </div>
+          <div className="">
+            <Chartjs charts={charts[1].eta} label={charts[1].label}/>
+          </div>
+        </div>
+
+        <div className="container mt-10">
+          <Chartjs charts={charts[0].chartKapal} label={charts[0].label}/>
+        </div>
       </div>
-      
+
+
     </Layout>
   )
 }
