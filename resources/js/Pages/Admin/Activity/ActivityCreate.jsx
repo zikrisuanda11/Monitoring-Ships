@@ -7,8 +7,8 @@ import {
 } from "react-icons/ri";
 import Alert from "@/Components/Alert";
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
-import SelectShip from "@/Components/Selects/SelectShip";
 import SelectServiceCode from "@/Components/Selects/SelectServiceCode";
+import ComboboxShip from "@/Components/ComboboxShip";
 
 export default function ActivityCreate({ ships, errors, user }) {
 	const [activity_id, setActivityId] = useState('');
@@ -83,7 +83,7 @@ export default function ActivityCreate({ ships, errors, user }) {
 												content={<div>Gross Register Tonnage: pengukuran kapasitas kapal yang digunakan untuk menghitung ukuran kapal secara kasar.</div>}
 											/>
 										</label>
-										<SelectShip onDataChange={setShipId} datas={ships}></SelectShip>
+										<ComboboxShip onDataChange={setShipId} datas={ships}/>
 										{errors.ship_id && (
 											<Alert message={errors.ship_id} />
 										)}

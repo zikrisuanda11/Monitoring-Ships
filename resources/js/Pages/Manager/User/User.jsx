@@ -48,9 +48,9 @@ export default function Users({ users, session, user }) {
       <div className="px-4 sm:px-6 lg:px-8">
         <div className="sm:flex sm:items-center">
           <div className="sm:flex-auto">
-            <h1 className="text-xl font-semibold text-gray-900">Ships</h1>
+            <h1 className="text-xl font-semibold text-gray-900">Data Tenaga Kerja</h1>
             <p className="mt-2 text-sm text-gray-500">
-              List nama kapal, GRT(Gross Register Tonnage), LOA(Length Over All), dan nama Agent.
+              List Nama, Email & Jabatan para tenaga kerja
             </p>
           </div>
           <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
