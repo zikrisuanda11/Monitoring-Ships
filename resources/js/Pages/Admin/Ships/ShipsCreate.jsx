@@ -2,9 +2,7 @@ import React, { useState } from "react";
 import Layout from "../../Layouts/Default";
 import PopoverHover from "@/Components/Popover";
 import { Inertia } from '@inertiajs/inertia';
-import {
-	RiErrorWarningFill
-} from "react-icons/ri";
+import {RiErrorWarningFill} from "react-icons/ri";
 import Alert from "@/Components/Alert";
 
 export default function ShipsCreate({ errors, user }) {
@@ -44,7 +42,7 @@ export default function ShipsCreate({ errors, user }) {
 						<div className="mt-5 md:mt-0 md:col-span-2">
 							<form onSubmit={storeShip}>
 								<div className="grid grid-cols-6 gap-6">
-									<div className="col-span-6 sm:col-span-4">
+									<div className="col-span-6 sm:col-span-3">
 										<label htmlFor="ship_name" className="block text-sm font-medium text-gray-700 relative">
 											Nama Kapal
 											<span className="text-red-500 text-sm "> *</span>
@@ -66,56 +64,6 @@ export default function ShipsCreate({ errors, user }) {
 									</div>
 
 									<div className="col-span-6 sm:col-span-3">
-										<label htmlFor="grt" className="text-sm font-medium text-gray-700 relative flex">
-											GRT
-											<span className="text-red-500 text-sm mx-1"> *</span>
-											<PopoverHover
-												trigger={<RiErrorWarningFill size={12} />}
-												content={<div>Gross Register Tonnage: pengukuran kapasitas kapal yang digunakan untuk menghitung ukuran kapal secara kasar.</div>}
-											/>
-										</label>
-										<input
-											value={grt}
-											onChange={(e) => {
-												setGrt(e.target.value)
-											}}
-											type="number"
-											name="grt"
-											id="grt"
-											autoComplete="given-name"
-											className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-										/>
-										{errors.grt && (
-											<Alert message={errors.grt} />
-										)}
-									</div>
-
-									<div className="col-span-6 sm:col-span-3">
-										<label htmlFor="loa" className="text-sm font-medium text-gray-700 flex">
-											LOA
-											<span className="text-red-500 text-sm mx-1">*</span>
-											<PopoverHover
-												trigger={<RiErrorWarningFill size={12} />}
-												content={<div>Length Over All: panjang kapal dari titik terluar pada bagian depan hingga titik terluar pada bagian belakang kapal</div>}
-											/>
-										</label>
-										<input
-											value={loa}
-											onChange={(e) => {
-												setLoa(e.target.value)
-											}}
-											type="number"
-											name="loa"
-											id="loa"
-											autoComplete="family-name"
-											className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-										/>
-										{errors.loa && (
-											<Alert message={errors.loa} />
-										)}
-									</div>
-
-									<div className="col-span-6 sm:col-span-4">
 										<label htmlFor="agent" className="block text-sm font-medium text-gray-700 relative">
 											Nama Agent
 											<span className="text-red-500 text-sm "> *</span>
@@ -135,6 +83,57 @@ export default function ShipsCreate({ errors, user }) {
 											<Alert message={errors.agent} />
 										)}
 									</div>
+
+									<div className="col-span-6 sm:col-span-3">
+										<label htmlFor="loa" className="text-sm font-medium text-gray-700 flex">
+											LOA
+											<span className="text-red-500 text-sm mx-1">*</span>
+											<PopoverHover
+												icon={<RiErrorWarningFill size={12} />}
+												content={<div>Length Over All: panjang kapal dari titik terluar pada bagian depan hingga titik terluar pada bagian belakang kapal</div>}
+											/>
+										</label>
+										<input
+											value={loa}
+											onChange={(e) => {
+												setLoa(e.target.value)
+											}}
+											type="number"
+											name="loa"
+											id="loa"
+											autoComplete="family-name"
+											className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+										/>
+										{errors.loa && (
+											<Alert message={errors.loa} />
+										)}
+									</div>
+
+									<div className="col-span-6 sm:col-span-3">
+										<label htmlFor="grt" className="text-sm font-medium text-gray-700 relative flex">
+											GRT
+											<span className="text-red-500 text-sm mx-1"> *</span>
+											<PopoverHover
+												icon={<RiErrorWarningFill size={12} />}
+												content={<div>Gross Register Tonnage: pengukuran kapasitas kapal yang digunakan untuk menghitung ukuran kapal secara kasar.</div>}
+											/>
+										</label>
+										<input
+											value={grt}
+											onChange={(e) => {
+												setGrt(e.target.value)
+											}}
+											type="number"
+											name="grt"
+											id="grt"
+											autoComplete="given-name"
+											className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+										/>
+										{errors.grt && (
+											<Alert message={errors.grt} />
+										)}
+									</div>
+									
 
 								</div>
 								<div className="flex my-5">

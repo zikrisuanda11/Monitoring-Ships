@@ -1,15 +1,10 @@
 import React from "react";
-import { InertiaLink, usePage } from '@inertiajs/inertia-react';
 import Layout from "../../Layouts/Default";
-import SuccessAlert from "@/Components/SuccessAlert";
-import {
-  RiEditLine,
-  RiDeleteBin2Line
-} from "react-icons/ri";
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 
 export default function Ships({ ships, session, user }) {
-  const rows = ships.map((ship) => ({
+  const rows = ships.map((ship, index) => ({
+    no: index + 1,
     id: ship.id,
     ship_name: ship.ship_name,
     grt: ship.grt,
@@ -18,11 +13,17 @@ export default function Ships({ ships, session, user }) {
   }));
 
   const columns = [
-    { field: 'id', headerName: 'ID', flex: 1 },
-    { field: 'ship_name', headerName: 'Nama Kapal', flex: 3 },
-    { field: 'grt', headerName: 'GRT', flex: 1 },
-    { field: 'loa', headerName: 'LOA', flex: 1 },
-    { field: 'agent', headerName: 'Agent', flex: 3 },
+    {
+      field: 'no', 
+      headerName: 'No', 
+      width: 120, 
+      headerAlign: 'center',
+      align: 'center'
+    },
+    { field: 'ship_name', headerName: 'Nama Kapal', width: 300 },
+    { field: 'grt', headerName: 'GRT', width: 120 },
+    { field: 'loa', headerName: 'LOA', width: 150 },
+    { field: 'agent', headerName: 'Agent', width: 300 },
   ];
 
   return (
@@ -30,7 +31,7 @@ export default function Ships({ ships, session, user }) {
       <div className="px-4 sm:px-6 lg:px-8">
         <div className="sm:flex sm:items-center">
           <div className="sm:flex-auto">
-            <h1 className="text-xl font-semibold text-gray-900">Ships</h1>
+            <h1 className="text-xl font-semibold text-gray-900">Data Kapal</h1>
             <p className="mt-2 text-sm text-gray-500">
               List nama kapal, GRT(Gross Register Tonnage), LOA(Length Over All), dan nama Agent.
             </p>
@@ -45,8 +46,8 @@ export default function Ships({ ships, session, user }) {
                     getRowId={rows.id}
                     rows={rows}
                     columns={columns}
-                    pageSize={5}
-                    rowsPerPageOptions={[5]}
+                    initialState={{ pagination: { paginationModel: { pageSize: 25 } } }}
+                    components={{ Toolbar: GridToolbar }}
                   />
                 </div>
               </div>

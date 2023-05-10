@@ -1,12 +1,6 @@
 import React from "react";
-import { InertiaLink } from '@inertiajs/inertia-react';
 import Layout from "../../Layouts/Default";
-import SuccessAlert from "@/Components/SuccessAlert";
-import {
-  RiEditLine,
-  RiDeleteBin2Line
-} from "react-icons/ri";
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 
 export default function activities({ activities, session, user }) {
   const rows = activities.map((activity) => ({
@@ -19,26 +13,38 @@ export default function activities({ activities, session, user }) {
   }));
 
   const columns = [
-    { field: 'activity_id', headerName: 'Vessel ID', flex: 1 },
-    { field: 'ship_name', headerName: 'Nama Kapal', flex: 2 },
-    { field: 'service_code', headerName: 'Service Code', flex: 3 },
-    { field: 'eta', headerName: 'ETA', flex: 2},
-    { field: 'etd', headerName: 'ETD', flex: 2},
+    {
+      field: 'activity_id',
+      headerName: 'Vessel ID',
+      width: 120,
+      headerAlign: 'center',
+      align: 'center'
+    },
+    { field: 'ship_name', headerName: 'Nama Kapal', width: 250 },
+    {
+      field: 'service_code',
+      headerName: 'Service Code',
+      width: 250,
+      valueGetter: (params) => {
+        const capitalizedText = params.row.service_code
+          .split('_')
+          .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+          .join(' ');
+        return capitalizedText;
+      }
+    },
+    { field: 'eta', headerName: 'ETA', width: 170 },
+    { field: 'etd', headerName: 'ETD', width: 200 },
   ];
 
   return (
     <Layout user={user}>
-      {session.success && (
-        <SuccessAlert
-          message={session.success}
-        />
-      )}
       <div className="px-4 sm:px-6 lg:px-8">
         <div className="sm:flex sm:items-center">
           <div className="sm:flex-auto">
-            <h1 className="text-xl font-semibold text-gray-900">Activities</h1>
+            <h1 className="text-xl font-semibold text-gray-900">Data Kegiatan Kapal</h1>
             <p className="mt-2 text-sm text-gray-500">
-              List logistik ID, nama kapal, ETA (Estimated Time Arrive), ETD (Estimated Time Departure)
+              List Vessel ID, Nama Kapal, ETA (Estimated Time Arrive), ETD (Estimated Time Departure)
             </p>
           </div>
         </div>
@@ -51,8 +57,8 @@ export default function activities({ activities, session, user }) {
                     getRowId={(row) => row.activity_id}
                     rows={rows}
                     columns={columns}
-                    pageSize={5}
-                    rowsPerPageOptions={[5]}
+                    initialState={{ pagination: { paginationModel: { pageSize: 25 } } }}
+                    components={{ Toolbar: GridToolbar }}
                   />
                 </div>
               </div>

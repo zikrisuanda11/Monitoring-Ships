@@ -39,7 +39,7 @@ export default function ShipsCreate({ship, errors, user }) {
 					<div className="md:grid md:grid-cols-3 md:gap-6">
 						<div className="md:col-span-1">
 							<h3 className="text-lg font-medium leading-6 text-gray-900">Informasi Kapal</h3>
-							<p className="mt-1 text-sm text-gray-500">Tambahkan informasi data kapal.</p>
+							<p className="mt-1 text-sm text-gray-500">Ubah informasi data kapal.</p>
 						</div>
 						<div className="mt-5 md:mt-0 md:col-span-2">
 							<form onSubmit={updateShip}>
@@ -72,7 +72,7 @@ export default function ShipsCreate({ship, errors, user }) {
 											GRT
 											<span className="text-red-500 text-sm mx-1"> *</span>
 											<PopoverHover
-												trigger={<RiErrorWarningFill size={12} />}
+												icon={<RiErrorWarningFill size={12} />}
 												content={<div>Gross Register Tonnage: pengukuran kapasitas kapal yang digunakan untuk menghitung ukuran kapal secara kasar.</div>}
 											/>
 										</label>
@@ -99,7 +99,7 @@ export default function ShipsCreate({ship, errors, user }) {
 											LOA
 											<span className="text-red-500 text-sm mx-1">*</span>
 											<PopoverHover
-												trigger={<RiErrorWarningFill size={12} />}
+												icon={<RiErrorWarningFill size={12} />}
 												content={<div>Length Over All: panjang kapal dari titik terluar pada bagian depan hingga titik terluar pada bagian belakang kapal</div>}
 											/>
 										</label>

@@ -15,23 +15,19 @@ class ShipSeeder extends Seeder
      */
     public function run()
     {
-        // Ship::factory()->count(25)->create();
         Ship::factory()
             ->count(12)
             ->maret()
             ->create();
 
-        // Memanggil state 'april' pada ShipFactory
         Ship::factory()
             ->count(20)
             ->april()
             ->create();
 
-        // Memanggil state 'mei' pada ShipFactory
         Ship::factory()
             ->count(15)
             ->mei()
             ->create();
-        
     }
 }

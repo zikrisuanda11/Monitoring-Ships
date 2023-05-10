@@ -1,32 +1,29 @@
 import React, { useState } from "react";
 import Layout from "../../Layouts/Default";
-import PopoverHover from "@/Components/Popover";
 import { Inertia } from '@inertiajs/inertia';
-import SelectRoleUserEdit from "@/Components/Selects/SelectRoleUserEdit";
 import Alert from "@/Components/Alert";
 
-export default function ShipsCreate({ users, errors, user }) {
-  const [name, setName] = useState(users.name);
-  const [email, setEmail] = useState(users.email);
-  const [password, setPassword] = useState(users.password);
-  const [role, setRole] = useState(users.roles.name);
+export default function ShipsCreate({ errors, user }) {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-  const storeUser = async (e) => {
+  const storeUser = (e) => {
     e.preventDefault();
 
-    Inertia.put(`/manager/users/${users.id}`, {
+    Inertia.post('/admin/users', {
       name: name,
       email: email,
       password: password,
-      role: role
     });
+    console.log("post harusnya di eksekusi");
   }
 
   const handleReset = () => {
     setName("");
     setEmail("");
     setPassword("");
-    Inertia.visit('/manager/users');
+    Inertia.visit('/admin/users');
   };
   return (
     <Layout user={user}>
@@ -35,8 +32,8 @@ export default function ShipsCreate({ users, errors, user }) {
         <div className="bg-white shadow px-4 py-5 sm:rounded-lg sm:p-6">
           <div className="md:grid md:grid-cols-3 md:gap-6">
             <div className="md:col-span-1">
-              <h3 className="text-lg font-medium leading-6 text-gray-900">Informasi Kapal</h3>
-              <p className="mt-1 text-sm text-gray-500">Tambahkan informasi data kapal.</p>
+              <h3 className="text-lg font-medium leading-6 text-gray-900">Informasi Tenaga Kerja</h3>
+              <p className="mt-1 text-sm text-gray-500">Tambahkan informasi tenaga kerja.</p>
             </div>
             <div className="mt-5 md:mt-0 md:col-span-2">
               <form onSubmit={storeUser}>
@@ -59,24 +56,6 @@ export default function ShipsCreate({ users, errors, user }) {
                     />
                     {errors.name && (
                       <Alert message={errors.name} />
-                    )}
-                  </div>
-
-                  <div className="col-span-6 sm:col-span-3">
-                    <label htmlFor="ship_id" className="text-sm font-medium text-gray-700 relative flex">
-                      Service Code
-                      <span className="text-red-500 text-sm mx-1"> *</span>
-                    </label>
-                    <SelectRoleUserEdit
-                      data={users}
-                      onDataChange={setRole}
-                      values={[
-                        { key: "admin", name: "Admin" },
-                        { key: "manager", name: "Manager" },
-                      ]}
-                    />
-                    {errors.ship_id && (
-                      <Alert message={errors.ship_id} />
                     )}
                   </div>
 

@@ -38,8 +38,8 @@ export default function FleetEdit({ fleet, activities, errors, user }) {
 				<div className="bg-white shadow px-4 py-5 sm:rounded-lg sm:p-6">
 					<div className="md:grid md:grid-cols-3 md:gap-6">
 						<div className="md:col-span-1">
-							<h3 className="text-lg font-medium leading-6 text-gray-900">Informasi Aktifitas Kapal</h3>
-							<p className="mt-1 text-sm text-gray-500">Tambahkan informasi aktifitas kapal.</p>
+							<h3 className="text-lg font-medium leading-6 text-gray-900">Informasi Armada Kapal</h3>
+							<p className="mt-1 text-sm text-gray-500">Ubah informasi armada kapal.</p>
 						</div>
 						<div className="mt-5 md:mt-0 md:col-span-2">
 							<form onSubmit={storeFleet}>
@@ -59,7 +59,6 @@ export default function FleetEdit({ fleet, activities, errors, user }) {
 											name="pkk_no"
 											id="pkk_no"
 											className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-											// onInvalid={(e) => e.target.setCustomValidity('PKK No Wajib Diisi.')}
 										/>
 										{errors.pkk_no && (
 											<Alert message={errors.pkk_no} />
@@ -117,11 +116,6 @@ export default function FleetEdit({ fleet, activities, errors, user }) {
 											activities={activities}
 											fleet={fleet}
 										/>
-                    {/* <SelectVesselEdit
-											fleet={fleet}
-                      onDataChange={setActivityId}
-                      activities={activities}
-                    /> */}
 										{errors.activity_id && (
 											<Alert message={errors.activity_id} />
 										)}

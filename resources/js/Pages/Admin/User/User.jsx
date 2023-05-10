@@ -10,7 +10,7 @@ import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import DeleteModal from "@/Components/DeleteModal";
 import { Inertia } from "@inertiajs/inertia";
 
-export default function Ships({ user, ships, session }) {
+export default function Users({ users, session, user }) {
 
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isModalMessageOpen, setIsModalMessageOpen] = useState(false)
@@ -21,9 +21,9 @@ export default function Ships({ user, ships, session }) {
     id: null,
     actionConfirm: null,
   })
-
+  
   const handleDelete = () => {
-    Inertia.delete(`/admin/ships/${modalContent.current.id}`)
+    Inertia.delete(`/admin/users/${modalContent.current.id}`)
     closeModal();
   }
 
@@ -45,61 +45,57 @@ export default function Ships({ user, ships, session }) {
     }
   }, [session.success.message]);
 
+  const rows = users.map((user, index) => ({
+    no: index + 1,
+    id: user.id,
+    name: user.name,
+    email: user.email,
+    roles: user.roles.map((role) => role.name)
+  }));
+
   const columns = [
     {
       field: 'no',
       headerName: 'No',
-      width: 120,
+      width: 100,
       headerAlign: 'center',
       align: 'center'
     },
-    { field: 'ship_name', headerName: 'Nama Kapal', width: 300 },
-    { field: 'grt', headerName: 'GRT', width: 120 },
-    { field: 'loa', headerName: 'LOA', width: 150 },
-    { field: 'agent', headerName: 'Agent', width: 300 },
+    { field: 'name', headerName: 'Nama', width: 200},
+    { field: 'email', headerName: 'Email', width: 250 },
+    { field: 'roles', headerName: 'Jabatan', width: 150 },
     {
       sortable: false,
-      field: 'action',
+      field: 'id',
       headerName: 'Actions',
-      width: 150,
+      width: 100,
       renderCell: (params) => {
-        const isDeleteShip = () => {
+        const isDeleteUser = () => {
           modalContent.current = {
             title: 'Hapus Data',
-            description: 'Menghapus data kapal juga menghapus data kegiatan kapal dan data armada kapal secara tidak langsung',
+            description: 'Data yang dihapus tidak dapat dikembalikan. Apakah Anda yakin ingin melanjutkan penghapusan data armada kapal?',
             id: params.row.id,
             actionConfirm: handleDelete,
           };
 
           openModal();
         };
-
         return (
           <>
-            <InertiaLink as="button" key={`edit-${params.row.id}`} href={`/admin/ships/${params.row.id}/edit`}>
+            <InertiaLink as="button" key={`edit-${params.row.id}`} href={`/admin/users/${params.row.id}/edit`}>
               <RiEditLine size={18} className="text-indigo-600 hover:text-indigo-900 mx-1" />
             </InertiaLink>
             <button
-              onClick={isDeleteShip}
+              onClick={isDeleteUser}
               type="button"
             >
-              <RiDeleteBin2Line size={18} className="text-indigo-600 hover:text-indigo-900 mx-1">
-              </RiDeleteBin2Line>
+              <RiDeleteBin2Line size={18} className="text-indigo-600 hover:text-indigo-900 mx-1"/>
             </button>
           </>
         )
       },
     },
   ];
-
-  const rows = ships.map((ship, index) => ({
-    no: index + 1,
-    id: ship.id,
-    ship_name: ship.ship_name,
-    grt: ship.grt,
-    loa: ship.loa,
-    agent: ship.agent,
-  }));
 
   return (
     <Layout user={user}>
@@ -121,9 +117,9 @@ export default function Ships({ user, ships, session }) {
       <div className="px-4 sm:px-6 lg:px-8">
         <div className="sm:flex sm:items-center">
           <div className="sm:flex-auto">
-            <h1 className="text-xl font-semibold text-gray-900">Data Kapal</h1>
+            <h1 className="text-xl font-semibold text-gray-900">Data Tenaga Kerja</h1>
             <p className="mt-2 text-sm text-gray-500">
-              List nama kapal, GRT(Gross Register Tonnage), LOA(Length Over All), dan nama Agent.
+              List Nama, Email & Jabatan para tenaga kerja
             </p>
           </div>
           <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
@@ -132,7 +128,7 @@ export default function Ships({ user, ships, session }) {
               className="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
             >
               <InertiaLink
-                href="/admin/ships/create"
+                href="/admin/users/create"
                 className="w-full"
                 tabIndex="-1"
                 method="get"
@@ -148,7 +144,7 @@ export default function Ships({ user, ships, session }) {
               <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
                 <div style={{ height: 480, width: '100%' }}>
                   <DataGrid
-                    getRowId={rows.id}
+                    getRowId={(row) => row.email}
                     rows={rows}
                     columns={columns}
                     initialState={{ pagination: { paginationModel: { pageSize: 25 } } }}
