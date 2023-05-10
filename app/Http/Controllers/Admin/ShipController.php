@@ -13,6 +13,7 @@ class ShipController extends Controller
     public function index()
     {
         $ships = Ship::all();
+        
         return inertia('Admin/Ships/Ships', [
             'ships' => $ships,
             'user' => Auth::user()
@@ -58,14 +59,20 @@ class ShipController extends Controller
             'agent' => $request->agent
         ]);
 
-        return redirect()->route('admin.ships.index')->with('success', 'Data Berhasil di Update');
+        return redirect()->route('admin.ships.index')->with('success', 'Data Berhasil di Ubah');
     }
 
     public function destroy($id)
     {
         $ship = Ship::find($id);
         $ship->delete();
-
+        
         return redirect()->route('admin.ships.index')->with('success', 'Data Berhasil di Hapus');
+       
+    }
+
+    public function deleteSession()
+    {
+        
     }
 }

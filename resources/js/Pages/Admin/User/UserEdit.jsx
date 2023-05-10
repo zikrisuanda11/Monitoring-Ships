@@ -1,23 +1,20 @@
 import React, { useState } from "react";
 import Layout from "../../Layouts/Default";
-import SelectRoleUser from "@/Components/Selects/SelectRoleUser";
 import { Inertia } from '@inertiajs/inertia';
 import Alert from "@/Components/Alert";
 
-export default function ShipsCreate({ errors, user }) {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [role, setRole] = useState('');
+export default function ShipsCreate({ users, errors, user }) {
+  const [name, setName] = useState(users.name);
+  const [email, setEmail] = useState(users.email);
+  const [password, setPassword] = useState(users.password);
 
   const storeUser = async (e) => {
     e.preventDefault();
 
-    Inertia.post('/manager/users', {
+    Inertia.put(`/admin/users/${users.id}`, {
       name: name,
       email: email,
       password: password,
-      role: role
     });
   }
 
@@ -25,7 +22,7 @@ export default function ShipsCreate({ errors, user }) {
     setName("");
     setEmail("");
     setPassword("");
-    Inertia.visit('/manager/users');
+    Inertia.visit('/admin/users');
   };
   return (
     <Layout user={user}>
@@ -58,23 +55,6 @@ export default function ShipsCreate({ errors, user }) {
                     />
                     {errors.name && (
                       <Alert message={errors.name} />
-                    )}
-                  </div>
-
-                  <div className="col-span-6 sm:col-span-3">
-                    <label htmlFor="ship_id" className="text-sm font-medium text-gray-700 relative flex">
-                      Jabatan
-                      <span className="text-red-500 text-sm mx-1"> *</span>
-                    </label>
-                    <SelectRoleUser
-                      onDataChange={setRole}
-                      values={[
-                        { key: "admin", name: "Admin" },
-                        { key: "manager", name: "Manager" },
-                      ]}
-                    />
-                    {errors.role && (
-                      <Alert message={errors.role} />
                     )}
                   </div>
 

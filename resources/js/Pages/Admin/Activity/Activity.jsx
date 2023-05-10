@@ -1,14 +1,50 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { InertiaLink } from '@inertiajs/inertia-react';
 import Layout from "../../Layouts/Default";
 import SuccessAlert from "@/Components/SuccessAlert";
+import DeleteModal from "@/Components/DeleteModal";
 import {
   RiEditLine,
   RiDeleteBin2Line
 } from "react-icons/ri";
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import { Inertia } from "@inertiajs/inertia";
 
-export default function activities({ activities, session, user }) {
+export default function activities({ activities = null, session, user }) {
+
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isModalMessageOpen, setIsModalMessageOpen] = useState(false)
+
+  const modalContent = useRef({
+    title: '',
+    description: '',
+    id: null,
+    actionConfirm: null,
+  })
+
+  const handleDelete = () => {
+    Inertia.delete(`/admin/activities/${modalContent.current.id}`)
+    closeModal();
+  }
+
+  const openModal = () => {
+    setIsModalOpen(true)
+  }
+
+  const closeModal = () => {
+    setIsModalOpen(false)
+  }
+
+  const closeModalMessage = () => {
+    setIsModalMessageOpen(false)
+  }
+
+  useEffect(() => {
+    if (session.success.message) {
+      setIsModalMessageOpen(true);
+    }
+  }, [session.success.message]);
+
   const rows = activities.map((activity) => ({
     activity_id: activity.activity_id,
     ship_name: activity.ships.ship_name,
@@ -19,36 +55,79 @@ export default function activities({ activities, session, user }) {
   }));
 
   const columns = [
-    { field: 'activity_id', headerName: 'Vessel ID', flex: 1 },
-    { field: 'ship_name', headerName: 'Nama Kapal', flex: 2 },
-    { field: 'service_code', headerName: 'Service Code', flex: 3 },
-    { field: 'eta', headerName: 'ETA', flex: 2},
-    { field: 'etd', headerName: 'ETD', flex: 2},
+    {
+      field: 'activity_id',
+      headerName: 'Vessel ID',
+      width: 120, 
+      headerAlign: 'center',
+      align: 'center'
+    },
+    { field: 'ship_name', headerName: 'Nama Kapal', width: 250 },
+    {
+      field: 'service_code',
+      headerName: 'Service Code',
+      width: 250,
+      valueGetter: (params) => {
+        const capitalizedText = params.row.service_code
+          .split('_')
+          .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+          .join(' ');
+        return capitalizedText;
+      }
+    },
+    { field: 'eta', headerName: 'ETA', width: 170 },
+    { field: 'etd', headerName: 'ETD', width: 200 },
     {
       sortable: false,
       field: 'getRowId',
       headerName: 'Actions',
-      flex: 1,
-      renderCell: (params) => (
-        <>
-          <InertiaLink as="button" key={`edit-${params.row.activity_id}`} href={`/admin/activities/${params.row.activity_id}/edit`}>
-            <RiEditLine size={18} className="text-indigo-600 hover:text-indigo-900 mx-1" />
-          </InertiaLink>
-          <InertiaLink as="button" method="delete" key={`delete-${params.row.activity_id}`} href={`/admin/activities/${params.row.activity_id}`}>
-            <RiDeleteBin2Line size={18} className="text-indigo-600 hover:text-indigo-900 mx-1" />
-          </InertiaLink>
-        </>
-      ),
+      width: 100,
+      renderCell: (params) => {
+        const isDeleteActivity = () => {
+          modalContent.current = {
+            title: 'Hapus Data',
+            description: 'Menghapus data Kegiatan kapal juga menghapus data armada kapal secara tidak langsung',
+            id: params.row.activity_id,
+            actionConfirm: handleDelete,
+          };
+
+          openModal();
+        };
+        return (
+          <>
+            <InertiaLink as="button" key={`edit-${params.row.activity_id}`} href={`/admin/activities/${params.row.activity_id}/edit`}>
+              <RiEditLine size={18} className="text-indigo-600 hover:text-indigo-900 mx-1" />
+            </InertiaLink>
+            <button
+              onClick={isDeleteActivity}
+              type="button"
+            >
+              <RiDeleteBin2Line size={18} className="text-indigo-600 hover:text-indigo-900 mx-1">
+              </RiDeleteBin2Line>
+            </button>
+          </>
+        )
+      },
     },
   ];
 
   return (
     <Layout user={user}>
-      {session.success && (
+      {session.success.message && (
         <SuccessAlert
-          message={session.success}
+          openModal={isModalMessageOpen}
+          closeModal={closeModalMessage}
+          message={session.success.message}
         />
       )}
+      {isModalOpen && <DeleteModal
+        isModalOpen={isModalOpen}
+        closeModal={closeModal}
+        title={modalContent.current.title}
+        description={modalContent.current.description}
+        actionConfirm={modalContent.current.actionConfirm}
+      />}
+
       <div className="px-4 sm:px-6 lg:px-8">
         <div className="sm:flex sm:items-center">
           <div className="sm:flex-auto">
@@ -82,8 +161,8 @@ export default function activities({ activities, session, user }) {
                     getRowId={(row) => row.activity_id}
                     rows={rows}
                     columns={columns}
-                    pageSize={5}
-                    rowsPerPageOptions={[5]}
+                    initialState={{ pagination: { paginationModel: { pageSize: 25 } } }}
+                    components={{ Toolbar: GridToolbar }}
                   />
                 </div>
               </div>

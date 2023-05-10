@@ -47,7 +47,7 @@ export default function ActivityEdit({ships, activity, errors, user }) {
 					<div className="md:grid md:grid-cols-3 md:gap-6">
 						<div className="md:col-span-1">
 							<h3 className="text-lg font-medium leading-6 text-gray-900">Informasi Aktifitas Kapal</h3>
-							<p className="mt-1 text-sm text-gray-500">Tambahkan informasi aktifitas kapal.</p>
+							<p className="mt-1 text-sm text-gray-500">Ubah informasi aktifitas kapal.</p>
 						</div>
 						<div className="mt-5 md:mt-0 md:col-span-2">
 							<form onSubmit={updateActivity}>
@@ -113,7 +113,7 @@ export default function ActivityEdit({ships, activity, errors, user }) {
 											ETA
 											<span className="text-red-500 text-sm mx-1"> *</span>
 											<PopoverHover
-												trigger={<RiErrorWarningFill size={12} />}
+												icon={<RiErrorWarningFill size={12} />}
 												content={<div><strong>Estimated Time Arrive</strong><p>Memperkirakan waktu tiba kapal di Armada</p></div>}
 											/>
 										</label>
@@ -123,7 +123,6 @@ export default function ActivityEdit({ships, activity, errors, user }) {
 												width: '100%'
 											}}
 											slotProps={{ textField: { size: 'small' } }}
-											format="DD/MM/YYYY HH:MM A"
 											label="Estimated Time Arrive"
 											onChange={setEta}
 											id="eta"
@@ -138,7 +137,7 @@ export default function ActivityEdit({ships, activity, errors, user }) {
 											ETD
 											<span className="text-red-500 text-sm mx-1"> *</span>
 											<PopoverHover
-												trigger={<RiErrorWarningFill size={12} />}
+												icon={<RiErrorWarningFill size={12} />}
 												content={<div><strong>Estimated Time Departure</strong><p>Memperkirakan waktu keberangkatan kapal dari Armada</p></div>}
 											/>
 										</label>
@@ -148,7 +147,6 @@ export default function ActivityEdit({ships, activity, errors, user }) {
 												width: '100%'
 											}}
 											slotProps={{ textField: { size: 'small' } }}
-											format="DD/MM/YYYY HH:MM A"
 											label="Estimated Time Departure"
 											onChange={setEtd}
 											id="etd"

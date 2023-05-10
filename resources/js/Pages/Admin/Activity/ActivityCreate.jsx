@@ -62,12 +62,11 @@ export default function ActivityCreate({ ships, errors, user }) {
 												setActivityId(e.target.value)
 											}}
 											placeholder="Contoh: VS1142"
-											// required
 											type="text"
 											name="activity_id"
 											id="activity_id"
 											className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-											// onInvalid={(e) => e.target.setCustomValidity('Nama Kapal Wajib Diisi.')}
+											
 										/>
 										{errors.activity_id && (
 											<Alert message={errors.activity_id} />
@@ -78,10 +77,6 @@ export default function ActivityCreate({ ships, errors, user }) {
 										<label htmlFor="ship_id" className="text-sm font-medium text-gray-700 relative flex">
 											Nama Kapal
 											<span className="text-red-500 text-sm mx-1"> *</span>
-											<PopoverHover
-												trigger={<RiErrorWarningFill size={12} />}
-												content={<div>Gross Register Tonnage: pengukuran kapasitas kapal yang digunakan untuk menghitung ukuran kapal secara kasar.</div>}
-											/>
 										</label>
 										<ComboboxShip onDataChange={setShipId} datas={ships}/>
 										{errors.ship_id && (
@@ -114,7 +109,7 @@ export default function ActivityCreate({ ships, errors, user }) {
 											ETA
 											<span className="text-red-500 text-sm mx-1"> *</span>
 											<PopoverHover
-												trigger={<RiErrorWarningFill size={12} />}
+												icon={<RiErrorWarningFill size={12} />}
 												content={<div><strong>Estimated Time Arrive</strong><p>Memperkirakan waktu tiba kapal di Armada</p></div>}
 											/>
 										</label>
@@ -123,7 +118,6 @@ export default function ActivityCreate({ ships, errors, user }) {
 												width: '100%'
 											}}
 											slotProps={{ textField: { size: 'small' } }}
-											format="DD/MM/YYYY HH:MM A"
 											label="Estimated Time Arrive"
 											onChange={setEta}
 											id="eta"
@@ -138,7 +132,7 @@ export default function ActivityCreate({ ships, errors, user }) {
 											ETD
 											<span className="text-red-500 text-sm mx-1"> *</span>
 											<PopoverHover
-												trigger={<RiErrorWarningFill size={12} />}
+												icon={<RiErrorWarningFill size={12} />}
 												content={<div><strong>Estimated Time Departure</strong><p>Memperkirakan waktu keberangkatan kapal dari Armada</p></div>}
 											/>
 										</label>
@@ -147,7 +141,6 @@ export default function ActivityCreate({ ships, errors, user }) {
 												width: '100%'
 											}}
 											slotProps={{ textField: { size: 'small' } }}
-											format="DD/MM/YYYY HH:MM A"
 											label="Estimated Time Departure"
 											onChange={setEtd}
 											id="etd"

@@ -1,15 +1,53 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { InertiaLink } from '@inertiajs/inertia-react';
 import Layout from "../../Layouts/Default";
 import SuccessAlert from "@/Components/SuccessAlert";
+import DeleteModal from "@/Components/DeleteModal";
 import {
   RiEditLine,
   RiDeleteBin2Line
 } from "react-icons/ri";
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import { Inertia } from "@inertiajs/inertia";
 
 export default function Fleet({ fleets, session, user }) {
-  const rows = fleets.map((fleet) => ({
+
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isModalMessageOpen, setIsModalMessageOpen] = useState(false)
+
+  const modalContent = useRef({
+    title: '',
+    description: '',
+    id: null,
+    actionConfirm: null,
+  })
+
+  const handleDelete = () => {
+    Inertia.delete(`/admin/fleets/${modalContent.current.id}`)
+    closeModal();
+  }
+
+  const openModal = () => {
+    setIsModalOpen(true)
+  }
+
+  const closeModal = () => {
+    setIsModalOpen(false)
+  }
+
+  const closeModalMessage = () => {
+    setIsModalMessageOpen(false)
+  }
+
+  useEffect(() => {
+    if (session.success.message) {
+      setIsModalMessageOpen(true);
+    }
+  }, [session.success.message]);
+
+
+  const rows = fleets.map((fleet, index) => ({
+    no: index + 1,
     id: fleet.id,
     activity_id: fleet.activity_id,
     status_doc: fleet.status_doc,
@@ -19,36 +57,78 @@ export default function Fleet({ fleets, session, user }) {
   }));
 
   const columns = [
-    { field: 'id', headerName: 'ID Armada', flex: 1 },
-    { field: 'activity_id', headerName: 'ID Vessel', flex: 2 },
-    { field: 'status_doc', headerName: 'Status Document', flex: 2 },
-    { field: 'pkk_no', headerName: 'PKK No', flex: 2 },
-    { field: 'ppkb', headerName: 'PPKB', flex: 2 },
+    {
+      field: 'no',
+      headerName: 'No',
+      width: 120,
+      headerAlign: 'center',
+      align: 'center'
+    },
+    { field: 'activity_id', headerName: 'ID Vessel', width: 200 },
+    {
+      field: 'status_doc',
+      headerName: 'Status Document',
+      width: 200,
+      valueGetter: (params) => {
+        const capitalizedText = params.row.status_doc
+          .split('_')
+          .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+          .join(' ');
+        return capitalizedText;
+      }
+    },
+    { field: 'pkk_no', headerName: 'PKK No', width: 300 },
+    { field: 'ppkb', headerName: 'PPKB', width: 200 },
     {
       sortable: false,
       field: 'getRowId',
       headerName: 'Actions',
-      flex: 1,
-      renderCell: (params) => (
-        <>
-          <InertiaLink as="button" key={`edit-${params.row.id}`} href={`/admin/fleets/${params.row.id}/edit`}>
-            <RiEditLine size={18} className="text-indigo-600 hover:text-indigo-900 mx-1" />
-          </InertiaLink>
-          <InertiaLink as="button" method="delete" key={`delete-${params.row.id}`} href={`/admin/fleets/${params.row.id}`}>
-            <RiDeleteBin2Line size={18} className="text-indigo-600 hover:text-indigo-900 mx-1" />
-          </InertiaLink>
-        </>
-      ),
+      width: 100,
+      renderCell: (params) => {
+        const isDeleteFleet = () => {
+          modalContent.current = {
+            title: 'Hapus Data',
+            description: 'Data yang dihapus tidak dapat dikembalikan. Apakah Anda yakin ingin melanjutkan penghapusan data armada kapal?',
+            id: params.row.id,
+            actionConfirm: handleDelete,
+          };
+
+          openModal();
+        };
+        return (
+          <>
+            <InertiaLink as="button" key={`edit-${params.row.id}`} href={`/admin/fleets/${params.row.id}/edit`}>
+              <RiEditLine size={18} className="text-indigo-600 hover:text-indigo-900 mx-1" />
+            </InertiaLink>
+            <button
+              onClick={isDeleteFleet}
+              type="button"
+            >
+              <RiDeleteBin2Line size={18} className="text-indigo-600 hover:text-indigo-900 mx-1">
+              </RiDeleteBin2Line>
+            </button>
+          </>
+        )
+      },
     },
   ];
 
   return (
     <Layout user={user}>
-      {session.success && (
+      {session.success.message && (
         <SuccessAlert
-          message={session.success}
+          openModal={isModalMessageOpen}
+          closeModal={closeModalMessage}
+          message={session.success.message}
         />
       )}
+      {isModalOpen && <DeleteModal
+        isModalOpen={isModalOpen}
+        closeModal={closeModal}
+        title={modalContent.current.title}
+        description={modalContent.current.description}
+        actionConfirm={modalContent.current.actionConfirm}
+      />}
       <div className="px-4 sm:px-6 lg:px-8">
         <div className="sm:flex sm:items-center">
           <div className="sm:flex-auto">
@@ -82,8 +162,8 @@ export default function Fleet({ fleets, session, user }) {
                     getRowId={(row) => row.activity_id}
                     rows={rows}
                     columns={columns}
-                    pageSize={5}
-                    rowsPerPageOptions={[5]}
+                    initialState={{ pagination: { paginationModel: { pageSize: 25 } } }}
+                    components={{ Toolbar: GridToolbar }}
                   />
                 </div>
               </div>

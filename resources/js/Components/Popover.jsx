@@ -2,7 +2,7 @@ import React from 'react';
 import { Fragment, useState } from 'react'
 import { Popover, Transition } from '@headlessui/react'
 
-export default function PopoverHover({ trigger, content }) {
+export default function PopoverHover({ icon, content }) {
   const [isOpen, setIsOpen] = useState(false)
 
   return (
@@ -12,14 +12,14 @@ export default function PopoverHover({ trigger, content }) {
       onMouseEnter={() => setIsOpen(true)}
       onMouseLeave={() => setIsOpen(false)}
     >
-      {({ open }) => (
+      {({ isOpen }) => (
         <>
           <Popover.Button
             className={`${
-              open ? '' : 'text-opacity-90'
+              isOpen ? '' : 'text-opacity-90'
             } text-white group bg-gray-500 rounded-md text-sm font-medium hover:text-opacity-100 my-1`}
           >
-            {trigger}
+            {icon}
           </Popover.Button>
 
           <Transition
