@@ -36,7 +36,6 @@ class UserController extends Controller
      */
     public function store(UserRequest $request)
     {
-        dd('store ke eksekusi');
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -78,14 +77,14 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate((new UserRequest($id))->rules(), (new UserRequest())->messages());
+        $request->validate((new UserRequest([$id]))->rulesUpdate(), (new UserRequest())->messagesUpdate());
 
         $data = User::find($id);
         
         $data->update([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => Hash::make($request->password),
+            // 'password' => Hash::make($request->password),
         ]);
         
         return redirect()->route('admin.users.index')->with('success', 'Data Berhasil di Ubah');

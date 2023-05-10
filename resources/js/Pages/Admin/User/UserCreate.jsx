@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Layout from "../../Layouts/Default";
-import { Inertia } from '@inertiajs/inertia';
+import { Inertia } from "@inertiajs/inertia";
 import Alert from "@/Components/Alert";
 
 export default function ShipsCreate({ errors, user }) {
@@ -8,15 +8,14 @@ export default function ShipsCreate({ errors, user }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const storeUser = (e) => {
+  const storeUser = async (e) => {
     e.preventDefault();
 
     Inertia.post('/admin/users', {
       name: name,
       email: email,
-      password: password,
-    });
-    console.log("post harusnya di eksekusi");
+      password: password
+    })
   }
 
   const handleReset = () => {
@@ -51,7 +50,6 @@ export default function ShipsCreate({ errors, user }) {
                       type="text"
                       name="name"
                       id="name"
-                      autoComplete="email"
                       className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                     />
                     {errors.name && (
@@ -72,7 +70,6 @@ export default function ShipsCreate({ errors, user }) {
                       type="email"
                       name="email"
                       id="email"
-                      autoComplete="given-name"
                       className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                     />
                     {errors.email && (
@@ -93,7 +90,6 @@ export default function ShipsCreate({ errors, user }) {
                       type="password"
                       name="password"
                       id="password"
-                      autoComplete="family-name"
                       className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                     />
                     {errors.password && (
@@ -121,8 +117,6 @@ export default function ShipsCreate({ errors, user }) {
             </div>
           </div>
         </div>
-
-
       </div>
     </Layout>
   )

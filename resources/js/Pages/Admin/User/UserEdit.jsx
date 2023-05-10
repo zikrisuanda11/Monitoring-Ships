@@ -6,7 +6,7 @@ import Alert from "@/Components/Alert";
 export default function ShipsCreate({ users, errors, user }) {
   const [name, setName] = useState(users.name);
   const [email, setEmail] = useState(users.email);
-  const [password, setPassword] = useState(users.password);
+  // const [password, setPassword] = useState(users.password);
 
   const storeUser = async (e) => {
     e.preventDefault();
@@ -14,14 +14,14 @@ export default function ShipsCreate({ users, errors, user }) {
     Inertia.put(`/admin/users/${users.id}`, {
       name: name,
       email: email,
-      password: password,
+      // password: password,
     });
   }
 
   const handleReset = () => {
     setName("");
     setEmail("");
-    setPassword("");
+    // setPassword("");
     Inertia.visit('/admin/users');
   };
   return (
@@ -79,7 +79,7 @@ export default function ShipsCreate({ users, errors, user }) {
                     )}
                   </div>
 
-                  <div className="col-span-6 sm:col-span-3">
+                  {/* <div className="col-span-6 sm:col-span-3">
                     <label htmlFor="password" className="text-sm font-medium text-gray-700 flex">
                       Password
                       <span className="text-red-500 text-sm mx-1">*</span>
@@ -98,7 +98,7 @@ export default function ShipsCreate({ users, errors, user }) {
                     {errors.password && (
                       <Alert message={errors.password} />
                     )}
-                  </div>
+                  </div> */}
 
                 </div>
                 <div className="flex my-5">
