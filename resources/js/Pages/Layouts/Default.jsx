@@ -47,9 +47,7 @@ export default function Layout({ children, user }) {
   const isAdmin = user.roles.find(role => role.name === 'admin');
   const navigation = isAdmin ? navigationAdmin : navigationManager;
 
-
   return (
-
     <>
       <div>
         <Transition.Root show={sidebarOpen} as={Fragment}>

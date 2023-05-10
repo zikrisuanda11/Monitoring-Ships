@@ -70,9 +70,4 @@ class ShipController extends Controller
         return redirect()->route('admin.ships.index')->with('success', 'Data Berhasil di Hapus');
        
     }
-
-    public function deleteSession()
-    {
-        
-    }
 }
