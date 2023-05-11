@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Layout from "../../Layouts/Default";
 import { Inertia } from '@inertiajs/inertia';
 import Alert from "@/Components/Alert";
+import { Head } from "@inertiajs/inertia-react";
 
 export default function ShipsCreate({ users, errors, user }) {
   const [name, setName] = useState(users.name);
@@ -25,6 +26,8 @@ export default function ShipsCreate({ users, errors, user }) {
     Inertia.visit('/admin/users');
   };
   return (
+    <>
+    <Head title='TenagaKerja-Admin' />
     <Layout user={user}>
       <div className="space-y-6">
 
@@ -124,5 +127,6 @@ export default function ShipsCreate({ users, errors, user }) {
 
       </div>
     </Layout>
+    </>
   )
 }

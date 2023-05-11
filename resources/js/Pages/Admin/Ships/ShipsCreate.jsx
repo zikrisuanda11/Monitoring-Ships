@@ -4,6 +4,7 @@ import PopoverHover from "@/Components/Popover";
 import { Inertia } from '@inertiajs/inertia';
 import {RiErrorWarningFill} from "react-icons/ri";
 import Alert from "@/Components/Alert";
+import { Head } from "@inertiajs/inertia-react";
 
 export default function ShipsCreate({ errors, user }) {
 	const [ship_name, setShipName] = useState('');
@@ -30,6 +31,8 @@ export default function ShipsCreate({ errors, user }) {
     Inertia.visit('/admin/ships');
   };
 	return (
+		<>
+		<Head title='Kapal-Admin' />
 		<Layout user={user}>
 			<div className="space-y-6">
 
@@ -159,5 +162,6 @@ export default function ShipsCreate({ errors, user }) {
 
 			</div>
 		</Layout>
+		</>
 	)
 }

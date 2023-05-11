@@ -9,6 +9,7 @@ import {
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import DeleteModal from "@/Components/DeleteModal";
 import { Inertia } from "@inertiajs/inertia";
+import { Head } from "@inertiajs/inertia-react";
 
 export default function Ships({ user, ships, session }) {
 
@@ -102,64 +103,67 @@ export default function Ships({ user, ships, session }) {
   }));
 
   return (
-    <Layout user={user}>
-      {session.success.message && (
-        <SuccessAlert
-          openModal={isModalMessageOpen}
-          closeModal={closeModalMessage}
-          message={session.success.message}
-        />
-      )}
-      {isModalOpen && <DeleteModal
-        isModalOpen={isModalOpen}
-        closeModal={closeModal}
-        title={modalContent.current.title}
-        description={modalContent.current.description}
-        actionConfirm={modalContent.current.actionConfirm}
-      />}
+    <>
+      <Head title='Kapal-Admin' />
+      <Layout user={user}>
+        {session.success.message && (
+          <SuccessAlert
+            openModal={isModalMessageOpen}
+            closeModal={closeModalMessage}
+            message={session.success.message}
+          />
+        )}
+        {isModalOpen && <DeleteModal
+          isModalOpen={isModalOpen}
+          closeModal={closeModal}
+          title={modalContent.current.title}
+          description={modalContent.current.description}
+          actionConfirm={modalContent.current.actionConfirm}
+        />}
 
-      <div className="px-4 sm:px-6 lg:px-8">
-        <div className="sm:flex sm:items-center">
-          <div className="sm:flex-auto">
-            <h1 className="text-xl font-semibold text-gray-900">Data Kapal</h1>
-            <p className="mt-2 text-sm text-gray-500">
-              List nama kapal, GRT(Gross Register Tonnage), LOA(Length Over All), dan nama Agent.
-            </p>
-          </div>
-          <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
-            <button
-              type="button"
-              className="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
-            >
-              <InertiaLink
-                href="/admin/ships/create"
-                className="w-full"
-                tabIndex="-1"
-                method="get"
+        <div className="px-4 sm:px-6 lg:px-8">
+          <div className="sm:flex sm:items-center">
+            <div className="sm:flex-auto">
+              <h1 className="text-xl font-semibold text-gray-900">Data Kapal</h1>
+              <p className="mt-2 text-sm text-gray-500">
+                List nama kapal, GRT(Gross Register Tonnage), LOA(Length Over All), dan nama Agent.
+              </p>
+            </div>
+            <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
+              <button
+                type="button"
+                className="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
               >
-                Tambah Data
-              </InertiaLink>
-            </button>
+                <InertiaLink
+                  href="/admin/ships/create"
+                  className="w-full"
+                  tabIndex="-1"
+                  method="get"
+                >
+                  Tambah Data
+                </InertiaLink>
+              </button>
+            </div>
           </div>
-        </div>
-        <div className="mt-8 flex flex-col">
-          <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
-            <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
-              <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
-                <div style={{ height: 480, width: '100%' }}>
-                  <DataGrid
-                    getRowId={rows.id}
-                    rows={rows}
-                    columns={columns}
-                    initialState={{ pagination: { paginationModel: { pageSize: 25 } } }}
-                    components={{ Toolbar: GridToolbar }}
-                  />
+          <div className="mt-8 flex flex-col">
+            <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
+              <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+                <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+                  <div style={{ height: 480, width: '100%' }}>
+                    <DataGrid
+                      getRowId={rows.id}
+                      rows={rows}
+                      columns={columns}
+                      initialState={{ pagination: { paginationModel: { pageSize: 25 } } }}
+                      components={{ Toolbar: GridToolbar }}
+                    />
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </Layout>
+      </Layout>
+    </>
   )
 }

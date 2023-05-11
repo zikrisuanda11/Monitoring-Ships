@@ -13,6 +13,7 @@ import {
 import { BiUserCircle } from 'react-icons/bi';
 import { GiBigWave } from 'react-icons/gi';
 import { MdOutlineSailing } from 'react-icons/md';
+import { Head } from "@inertiajs/inertia-react";
 
 import {
   RiShip2Line,
@@ -24,7 +25,6 @@ function classNames(...classes) {
 
 export default function Layout({ children, user }) {
 
-  // 
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const { url } = usePage();
 
@@ -40,7 +40,7 @@ export default function Layout({ children, user }) {
     { name: 'Dashboard', href: '/dashboard', icon: HomeIcon, isActive: url === '/dashboard' },
     { name: 'Data Kapal', href: '/manager/ships', icon: RiShip2Line, isActive: url === '/manager/ships' },
     { name: 'Data Kegiatan Kapal', href: '/manager/activities', icon: GiBigWave, isActive: url === '/manager/activities' },
-    { name: 'Data Armada Kapal', href: '/manager/fleets', icon: MdOutlineSailing, isActive: url === '/manager/fleets'},
+    { name: 'Data Armada Kapal', href: '/manager/fleets', icon: MdOutlineSailing, isActive: url === '/manager/fleets' },
     { name: 'Data Tenaga Kerja', href: '/manager/users', icon: BiUserCircle, isActive: url === '/manager/users' || url === '/manager/users/create' },
   ]
 
@@ -49,6 +49,7 @@ export default function Layout({ children, user }) {
 
   return (
     <>
+    {/* <Head title='tes' /> */}
       <div>
         <Transition.Root show={sidebarOpen} as={Fragment}>
           <Dialog as="div" className="fixed inset-0 flex z-40 md:hidden" onClose={setSidebarOpen}>
