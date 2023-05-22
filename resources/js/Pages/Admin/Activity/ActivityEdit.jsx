@@ -1,16 +1,14 @@
 import React, { useState } from "react";
+import { Inertia } from '@inertiajs/inertia';
+import { RiErrorWarningFill } from "react-icons/ri";
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+import { Head } from "@inertiajs/inertia-react";
 import Layout from "../../Layouts/Default";
 import PopoverHover from "@/Components/Popover";
-import { Inertia } from '@inertiajs/inertia';
-import {
-	RiErrorWarningFill
-} from "react-icons/ri";
 import Alert from "@/Components/Alert";
-import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import SelectServiceCodeEdit from "@/Components/Selects/SelectServiceCodeEdit";
 import dayjs from 'dayjs';
 import ComboboxShip from "@/Components/ComboboxShip";
-import { Head } from "@inertiajs/inertia-react";
 
 export default function ActivityEdit({ ships, activity, errors, user }) {
 	const [activity_id, setActivityId] = useState(activity.activity_id);

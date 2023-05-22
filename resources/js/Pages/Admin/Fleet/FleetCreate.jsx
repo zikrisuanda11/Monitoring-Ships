@@ -1,10 +1,12 @@
 import React, { useState } from "react";
-import Layout from "../../Layouts/Default";
+import { RiErrorWarningFill } from "react-icons/ri";
 import { Inertia } from '@inertiajs/inertia';
+import { Head } from "@inertiajs/inertia-react";
+import Layout from "../../Layouts/Default";
 import Alert from "@/Components/Alert";
 import SelectStatusDoc from "@/Components/Selects/SelectStatusDoc";
 import ComboboxVessel from "@/Components/ComboboxVessel";
-import { Head } from "@inertiajs/inertia-react";
+import PopoverHover from "@/Components/Popover";
 
 export default function FleetCreate({ activities, errors, user }) {
 	const [activity_id, setActivityId] = useState('');
@@ -112,11 +114,11 @@ export default function FleetCreate({ activities, errors, user }) {
 											<label htmlFor="activity_id" className="text-sm font-medium text-gray-700 flex">
 												Vessel ID
 												<span className="text-red-500 text-sm mx-1"> *</span>
+												<PopoverHover
+													icon={<RiErrorWarningFill size={12} />}
+													content={<div><strong>Vessel ID</strong><p>Vessel ID didapatkan dari Data Kegiatan Kapal</p></div>}
+												/>
 											</label>
-											{/* <SelectVessel
-                      onDataChange={setActivityId}
-                      activities={activities}
-                    /> */}
 											<ComboboxVessel
 												onDataChange={setActivityId}
 												activities={activities}

@@ -33,21 +33,27 @@ class DashboardController extends Controller
             ->whereYear('created_at', '=', Carbon::now()->year)
             ->count();
         $totalKapalBulanLalu = Ship::whereMonth('created_at', '=', date('m', strtotime('-1 month')))->count();
-        $persentaseJumlahKapalBulanIni = (($totalKapalBulanIni  - $totalKapalBulanLalu) / $totalKapalBulanLalu) * 100;
+        if($totalKapalBulanLalu != 0){
+            $persentaseJumlahKapalBulanIni = (($totalKapalBulanIni  - $totalKapalBulanLalu) / $totalKapalBulanLalu) * 100;
+        }else{
+            $persentaseJumlahKapalBulanIni = 0;
+        }
 
         $totalKegiatanKapal = Activity::all()->count();
         $totalKegiatanKapalBulanIni = Activity::whereMonth('created_at', '=', Carbon::now()->month)
             ->whereYear('created_at', '=', Carbon::now()->year)
             ->count();
         $totalKegiatanKapalBulanLalu = Activity::whereMonth('created_at', '=', date('m', strtotime('-1 month')))->count();
-        $persentaseKegiatanKapalBulanIni = (($totalKegiatanKapalBulanIni  - $totalKegiatanKapalBulanLalu) / $totalKegiatanKapalBulanLalu) * 100;
+        if($totalKegiatanKapalBulanLalu != 0){
+            $persentaseKegiatanKapalBulanIni = (($totalKegiatanKapalBulanIni  - $totalKegiatanKapalBulanLalu) / $totalKegiatanKapalBulanLalu) * 100;
+        }else{
+            $persentaseKegiatanKapalBulanIni = 0;
+        }
 
         // charts
         $today = Carbon::now()->addDay();
 
         $oneMonthAgo = Carbon::now()->subMonth();
-        
-        // dd($today, $oneMonthAgo);
         
         $totalKapalPerHari = [];
         

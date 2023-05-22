@@ -1,15 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
 import { InertiaLink } from '@inertiajs/inertia-react';
-import Layout from "../../Layouts/Default";
-import SuccessAlert from "@/Components/SuccessAlert";
-import {
-  RiEditLine,
-  RiDeleteBin2Line
-} from "react-icons/ri";
+import { RiEditLine, RiDeleteBin2Line } from "react-icons/ri";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
-import DeleteModal from "@/Components/DeleteModal";
 import { Inertia } from "@inertiajs/inertia";
 import { Head } from "@inertiajs/inertia-react";
+import Layout from "../../Layouts/Default";
+import SuccessAlert from "@/Components/SuccessAlert";
+import DeleteModal from "@/Components/DeleteModal";
 
 export default function Users({ users, session, user }) {
 

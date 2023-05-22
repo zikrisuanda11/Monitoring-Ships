@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import Layout from "../../Layouts/Default";
+import { Head } from "@inertiajs/inertia-react";
 import { Inertia } from '@inertiajs/inertia';
+import Layout from "../../Layouts/Default";
 import Alert from "@/Components/Alert";
 import SelectStatusDocEdit from "@/Components/Selects/SelectStatusDocEdit";
-import { Head } from "@inertiajs/inertia-react";
 import ComboboxVessel from "@/Components/ComboboxVessel";
 
 export default function FleetEdit({ fleet, activities, errors, user }) {

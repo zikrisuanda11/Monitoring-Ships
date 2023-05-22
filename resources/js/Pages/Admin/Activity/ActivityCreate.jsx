@@ -1,15 +1,13 @@
 import React, { useState } from "react";
+import { Inertia } from '@inertiajs/inertia';
+import { RiErrorWarningFill } from "react-icons/ri";
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+import { Head } from "@inertiajs/inertia-react";
 import Layout from "../../Layouts/Default";
 import PopoverHover from "@/Components/Popover";
-import { Inertia } from '@inertiajs/inertia';
-import {
-	RiErrorWarningFill
-} from "react-icons/ri";
 import Alert from "@/Components/Alert";
-import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import SelectServiceCode from "@/Components/Selects/SelectServiceCode";
 import ComboboxShip from "@/Components/ComboboxShip";
-import { Head } from "@inertiajs/inertia-react";
 
 export default function ActivityCreate({ ships, errors, user }) {
 	const [activity_id, setActivityId] = useState('');
@@ -87,7 +85,7 @@ export default function ActivityCreate({ ships, errors, user }) {
 											)}
 										</div>
 										<div className="col-span-6 sm:col-span-3">
-											<label htmlFor="ship_id" className="text-sm font-medium text-gray-700 relative flex">
+											<label htmlFor="service_code" className="text-sm font-medium text-gray-700 relative flex">
 												Service Code
 												<span className="text-red-500 text-sm mx-1"> *</span>
 											</label>
@@ -103,8 +101,8 @@ export default function ActivityCreate({ ships, errors, user }) {
 													{ key: "siklus_pelayanan_tambat", name: "Siklus Pelayanan Tambat" }
 												]}
 											/>
-											{errors.ship_id && (
-												<Alert message={errors.ship_id} />
+											{errors.service_code && (
+												<Alert message={errors.service_code} />
 											)}
 										</div>
 										<div className="col-span-6 sm:col-span-3">

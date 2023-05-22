@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import Layout from "../../Layouts/Default";
 import { Inertia } from '@inertiajs/inertia';
-import Alert from "@/Components/Alert";
 import { Head } from "@inertiajs/inertia-react";
+import Layout from "../../Layouts/Default";
+import Alert from "@/Components/Alert";
 
 export default function ShipsCreate({ users, errors, user }) {
   const [name, setName] = useState(users.name);

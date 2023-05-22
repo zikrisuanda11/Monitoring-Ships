@@ -1,12 +1,10 @@
 import React, { useState } from "react";
+import { Inertia } from '@inertiajs/inertia';
+import { RiErrorWarningFill } from "react-icons/ri";
+import { Head } from "@inertiajs/inertia-react";
 import Layout from "../../Layouts/Default";
 import PopoverHover from "@/Components/Popover";
-import { Inertia } from '@inertiajs/inertia';
-import {
-	RiErrorWarningFill
-} from "react-icons/ri";
 import Alert from "@/Components/Alert";
-import { Head } from "@inertiajs/inertia-react";
 
 export default function ShipsCreate({ ship, errors, user }) {
 	const [ship_name, setShipName] = useState(ship.ship_name);
