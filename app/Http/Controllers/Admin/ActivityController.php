@@ -116,6 +116,7 @@ class ActivityController extends Controller
     }
     public function exportPdf()
     {
+        $user_name = auth()->user()->name;
 
         $startDate = Carbon::now()->subWeek();
         $endDate = Carbon::now();
@@ -130,8 +131,11 @@ class ActivityController extends Controller
             ->whereBetween('created_at', [$startDate, $endDate])
             ->get();
 
-        $pdf = Pdf::loadView('cetak-pdf', compact('weekActivities', 'formattedStartDate', 'formattedEndDate', 'dayStartDate', 'dayEndDate'));
-        return $pdf->download('report-weekly.pdf');
+        // return view('cetak-pdf', compact('weekActivities', 'formattedStartDate', 'formattedEndDate', 'dayStartDate', 'dayEndDate'));
+
+        $pdf = Pdf::loadView('cetak-pdf', compact('weekActivities', 'formattedStartDate', 'formattedEndDate', 'dayStartDate', 'dayEndDate', 'user_name'));
+        return $pdf->stream();
+        // return $pdf->download('report-weekly.pdf');
     }
 
 }
