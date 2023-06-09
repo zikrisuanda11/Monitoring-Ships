@@ -23,20 +23,23 @@
             line-height: inherit;
             text-align: left;
             border-collapse: collapse;
-            
+
         }
 
         body h3 {
             text-align: center;
         }
 
-        .report-daily table, .report-daily th, .report-daily td {
-            border:  1px solid #999;
+        .report-daily table,
+        .report-daily th,
+        .report-daily td {
+            border: 1px solid #999;
             padding: 5px;
-            
+            font-size: small;
+
         }
-        
-        .time table td{
+
+        .time table td {
             border: none;
         }
 
@@ -45,11 +48,17 @@
             align-items: center;
         }
 
-        #eta, #etd {
+        #eta,
+        #etd {
             width: 100px;
-            
+
         }
-        
+
+        .tanda-tangan {
+            position: absolute;
+            left: 500px;
+            top: 600px;
+        }
     </style>
 
 </head>
@@ -61,16 +70,16 @@
             <tr>
                 <td>Hari</td>
                 <td>:</td>
-                <td>{{$dayStartDate . ' s/d ' . $dayEndDate}}</td>
+                <td>{{ $dayStartDate }}</td>
             </tr>
             <tr>
                 <td>Tanggal</td>
                 <td>:</td>
-                <td>{{$formattedStartDate . ' s/d ' . $formattedEndDate}}</td>
-            </tr>   
+                <td>{{ $formattedStartDate . ' s/d ' . $formattedEndDate }}</td>
+            </tr>
         </table>
     </div>
-    <h3>Weekly Monitoring Operation</h3>
+    <h3>Laporan Mingguan Monitoring Penjadwalan Kapal</h3>
     <div class="report-daily">
         <table>
             <thead>
@@ -80,28 +89,36 @@
                     <th>Nama Agent</th>
                     <th id="eta">ETA</th>
                     <th id="etd">ETD</th>
-                    <th>Data Ditambahkan</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($weekActivities as $weekActivity)
                     <tr>
-                        <td>{{$weekActivity->activity_id}}</td>
-                        <td>{{$weekActivity->ships->ship_name}}</td>
-                        <td>{{$weekActivity->ships->agent}}</td>
-                        <td>{{$weekActivity->eta}}</td>
-                        <td>{{$weekActivity->etd}}</td>
-                        <td>{{$weekActivity->created_at}}</td>
+                        <td>{{ $weekActivity->activity_id }}</td>
+                        <td>{{ $weekActivity->ships->ship_name }}</td>
+                        <td>{{ $weekActivity->ships->agent }}</td>
+                        <td>{{ $weekActivity->eta }}</td>
+                        <td>{{ $weekActivity->etd }}</td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
+        <p>
+            Catatan:
+        </p>
+        <ul>
+            <li>Data ini mengambil data 1 Minggu</li>
+            <li>-</li>
+            <li>Kapal Franz Paucek PhD Ketinggalan Tas</li>
+        </ul>
     </div>
-    {{-- @foreach ($aktifitasHariIni as $item)
-    @php
-      echo $item->activity_id
-    @endphp
-  @endforeach --}}
+    <div class="tanda-tangan">
+        <div style="width: 200px;">
+            <p style="margin-left: 35px">Staff Operasional</p>
+            <br>
+            <p style="margin-left: 80px">{{$user_name}}</p>
+        </div>
+    </div>
 </body>
 
 </html>
