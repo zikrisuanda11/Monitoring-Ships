@@ -75,7 +75,7 @@ export default function Fleet({ fleets, session, user }) {
         return capitalizedText;
       }
     },
-    { field: 'pkk_no', headerName: 'PKK No', width: 300 },
+    { field: 'pkk_no', headerName: 'No PKK', width: 300 },
     { field: 'ppkb', headerName: 'PPKB', width: 200 },
     {
       sortable: false,

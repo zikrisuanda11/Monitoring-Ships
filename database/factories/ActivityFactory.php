@@ -32,8 +32,8 @@ class ActivityFactory extends Factory
         return [
             'activity_id' => 'VS'. fake()->randomNumber(5, true),
             'ship_id' => Ship::pluck('id')->random(),
-            'eta' => Carbon::createFromDate(2023, fake()->numberBetween(3, 5), fake()->numberBetween(1, 30)),
-            'etd' => Carbon::createFromDate(2023, fake()->numberBetween(3, 5), fake()->numberBetween(1, 30)),
+            'eta' => Carbon::createFromDate(2023, fake()->numberBetween(3, 6), fake()->numberBetween(1, 30)),
+            'etd' => Carbon::createFromDate(2023, fake()->numberBetween(3, 6), fake()->numberBetween(1, 30)),
             'service_code' => $service_code->random()
         ];
     }
@@ -60,6 +60,15 @@ class ActivityFactory extends Factory
         return $this->state(function (array $attributes) {
             return [
                 'created_at' => Carbon::createFromDate(2023, 5, 1),
+            ];
+        });
+    }
+
+    public function juni()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'created_at' => Carbon::createFromDate(2023, 6, 5),
             ];
         });
     }
