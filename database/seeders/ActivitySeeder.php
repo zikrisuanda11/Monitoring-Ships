@@ -15,11 +15,6 @@ class ActivitySeeder extends Seeder
      */
     public function run()
     {
-        Activity::factory()
-            ->count(12)
-            ->maret()
-            ->create();
-
         // Memanggil state 'april' pada ActivityFactory
         Activity::factory()
             ->count(20)
@@ -30,6 +25,11 @@ class ActivitySeeder extends Seeder
         Activity::factory()
             ->count(25)
             ->mei()
+            ->create();
+
+        Activity::factory()
+            ->count(12)
+            ->juni()
             ->create();
     }
 }

@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\FleetRequest;
-use App\Models\Activity;
+use Carbon\Carbon;
 use App\Models\Fleet;
+use App\Models\Activity;
 use Illuminate\Http\Request;
+use App\Http\Requests\FleetRequest;
+use App\Http\Controllers\Controller;
 
 class FleetController extends Controller
 {
@@ -21,6 +22,11 @@ class FleetController extends Controller
         return inertia('Admin/Fleet/Fleet', [
             'fleets' => $fleets
         ]);
+    }
+
+    public function show()
+    {
+        
     }
 
     /**
@@ -103,4 +109,5 @@ class FleetController extends Controller
         $fleet->delete();
         return redirect()->route('admin.fleets.index')->with('success', 'Data Berhasil di Hapus');
     }
+
 }

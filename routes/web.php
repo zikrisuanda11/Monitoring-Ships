@@ -14,6 +14,8 @@ Route::middleware('auth')->group(function () {
         session()->forget('success');
         return;
     });
+    Route::get('/print-report-daily', [App\Http\Controllers\Admin\ActivityController::class, 'exportPdf']);
+    Route::get('/tes', [App\Http\Controllers\Admin\ActivityController::class, 'tes']);
     
     Route::prefix('/admin')->name('admin.')->middleware('role:admin')->group(function () {
         Route::resource('/ships', App\Http\Controllers\Admin\ShipController::class);

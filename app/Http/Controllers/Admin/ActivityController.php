@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\ActivityRequest;
 use DateTime;
+use Carbon\Carbon;
 use App\Models\Ship;
 use App\Models\Activity;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\ActivityRequest;
 
 class ActivityController extends Controller
 {
@@ -22,6 +24,10 @@ class ActivityController extends Controller
         return inertia('Admin/Activity/Activity', [
             'activities' => $data
         ]);
+    }
+
+    public function show()
+    {
     }
 
     /**
@@ -82,7 +88,7 @@ class ActivityController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate((new ActivityRequest($id))->rules(), (new ActivityRequest())->messages());
-        
+
         $activity = Activity::find($id);
         $activity->update([
             'activity_id' => $request->activity_id,
@@ -93,7 +99,6 @@ class ActivityController extends Controller
         ]);
 
         return redirect()->route('admin.activities.index')->with('success', 'Data Berhasil di Update');
-
     }
 
     /**
@@ -109,4 +114,24 @@ class ActivityController extends Controller
 
         return redirect()->route('admin.activities.index')->with('success', 'Data Berhasil di Hapus');
     }
+    public function exportPdf()
+    {
+
+        $startDate = Carbon::now()->subWeek();
+        $endDate = Carbon::now();
+
+        $formattedStartDate = $startDate->format('d-m-Y');
+        $formattedEndDate = $endDate->format('d-m-Y');
+        
+        $dayStartDate = $startDate->format('l');
+        $dayEndDate = $endDate->format('l');
+
+        $weekActivities = Activity::with('ships')
+            ->whereBetween('created_at', [$startDate, $endDate])
+            ->get();
+
+        $pdf = Pdf::loadView('cetak-pdf', compact('weekActivities', 'formattedStartDate', 'formattedEndDate', 'dayStartDate', 'dayEndDate'));
+        return $pdf->download('report-weekly.pdf');
+    }
+
 }
