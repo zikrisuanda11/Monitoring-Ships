@@ -31,5 +31,10 @@ class ActivitySeeder extends Seeder
             ->count(12)
             ->juni()
             ->create();
+
+        Activity::factory()
+            ->count(12)
+            ->now()
+            ->create();
     }
 }

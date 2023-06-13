@@ -7,7 +7,7 @@ import Alert from "@/Components/Alert";
 export default function ShipsCreate({ users, errors, user }) {
   const [name, setName] = useState(users.name);
   const [email, setEmail] = useState(users.email);
-  // const [password, setPassword] = useState(users.password);
+  const [nip, setNip] = useState(users.nip);
 
   const storeUser = async (e) => {
     e.preventDefault();
@@ -15,14 +15,14 @@ export default function ShipsCreate({ users, errors, user }) {
     Inertia.put(`/admin/users/${users.id}`, {
       name: name,
       email: email,
-      // password: password,
+      nip: nip,
     });
   }
 
   const handleReset = () => {
     setName("");
     setEmail("");
-    // setPassword("");
+    setNip("");
     Inertia.visit('/admin/users');
   };
   return (
@@ -82,26 +82,26 @@ export default function ShipsCreate({ users, errors, user }) {
                     )}
                   </div>
 
-                  {/* <div className="col-span-6 sm:col-span-3">
-                    <label htmlFor="password" className="text-sm font-medium text-gray-700 flex">
-                      Password
+                  <div className="col-span-6 sm:col-span-3">
+                    <label htmlFor="nip" className="text-sm font-medium text-gray-700 flex">
+                      NIP Pegawai
                       <span className="text-red-500 text-sm mx-1">*</span>
                     </label>
                     <input
-                      value={password}
+                      value={nip}
                       onChange={(e) => {
-                        setPassword(e.target.value)
+                        setNip(e.target.value)
                       }}
-                      type="password"
-                      name="password"
-                      id="password"
+                      type="number"
+                      name="nip"
+                      id="nip"
                       autoComplete="family-name"
                       className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                     />
-                    {errors.password && (
-                      <Alert message={errors.password} />
+                    {errors.nip && (
+                      <Alert message={errors.nip} />
                     )}
-                  </div> */}
+                  </div>
 
                 </div>
                 <div className="flex my-5">

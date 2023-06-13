@@ -121,8 +121,8 @@ class ActivityController extends Controller
         $startDate = Carbon::now()->subWeek();
         $endDate = Carbon::now();
 
-        $formattedStartDate = $startDate->format('d-m-Y');
-        $formattedEndDate = $endDate->format('d-m-Y');
+        $formattedStartDate = $startDate->locale('id')->isoFormat('D MMMM YYYY');
+        $formattedEndDate = $endDate->locale('id')->isoFormat('D MMMM YYYY');
         
         $dayStartDate = $startDate->format('l');
         $dayEndDate = $endDate->format('l');

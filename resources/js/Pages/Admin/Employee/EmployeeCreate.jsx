@@ -3,30 +3,28 @@ import { Head } from "@inertiajs/inertia-react";
 import { Inertia } from "@inertiajs/inertia";
 import Layout from "../../Layouts/Default";
 import Alert from "@/Components/Alert";
+import Select from "@/Components/Selects/Select";
 
-export default function ShipsCreate({ errors, user }) {
+export default function EmployeeCreate({ errors, user }) {
   const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
   const [nip, setNip] = useState('');
-  const [password, setPassword] = useState('');
+  const [roles, setRoles] = useState('');
 
   const storeUser = async (e) => {
     e.preventDefault();
 
-    Inertia.post('/admin/users', {
+    Inertia.post('/admin/employees', {
       name: name,
-      email: email,
       nip: nip,
-      password: password
+      roles: roles
     })
   }
 
   const handleReset = () => {
     setName("");
-    setEmail("");
     setNip("");
-    setPassword("");
-    Inertia.visit('/admin/users');
+    setRoles("");
+    Inertia.visit('/admin/employees');
   };
   return (
     <>
@@ -64,56 +62,16 @@ export default function ShipsCreate({ errors, user }) {
                     </div>
 
                     <div className="col-span-6 sm:col-span-3">
-                      <label htmlFor="email" className="text-sm font-medium text-gray-700 relative flex">
-                        Email
+                      <label htmlFor="nip" className="text-sm font-medium text-gray-700 relative flex">
+                        NIP
                         <span className="text-red-500 text-sm mx-1"> *</span>
-                      </label>
-                      <input
-                        value={email}
-                        onChange={(e) => {
-                          setEmail(e.target.value)
-                        }}
-                        type="email"
-                        name="email"
-                        id="email"
-                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                      />
-                      {errors.email && (
-                        <Alert message={errors.email} />
-                      )}
-                    </div>
-
-                    <div className="col-span-6 sm:col-span-3">
-                      <label htmlFor="password" className="text-sm font-medium text-gray-700 flex">
-                        Password
-                        <span className="text-red-500 text-sm mx-1">*</span>
-                      </label>
-                      <input
-                        value={password}
-                        onChange={(e) => {
-                          setPassword(e.target.value)
-                        }}
-                        type="password"
-                        name="password"
-                        id="password"
-                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                      />
-                      {errors.password && (
-                        <Alert message={errors.password} />
-                      )}
-                    </div>
-
-                    <div className="col-span-6 sm:col-span-3">
-                      <label htmlFor="password" className="text-sm font-medium text-gray-700 flex">
-                        NIP Pegawai
-                        <span className="text-red-500 text-sm mx-1">*</span>
                       </label>
                       <input
                         value={nip}
                         onChange={(e) => {
                           setNip(e.target.value)
                         }}
-                        type="number"
+                        type="text"
                         name="nip"
                         id="nip"
                         className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
@@ -123,6 +81,22 @@ export default function ShipsCreate({ errors, user }) {
                       )}
                     </div>
 
+                    <div className="col-span-6 sm:col-span-3">
+                      <label htmlFor="status_doc" className="text-sm font-medium text-gray-700 relative flex">
+                        Jabatan
+                        <span className="text-red-500 text-sm mx-1"> *</span>
+                      </label>
+                      <Select
+                        onDataChange={setRoles}
+                        values={[
+                          { key: "karyawan", name: "Karyawan" },
+                          { key: "manager", name: "Manager" },
+                        ]}
+                      />
+                      {errors.status_doc && (
+                        <Alert message={errors.status_doc} />
+                      )}
+                    </div>
                   </div>
                   <div className="flex my-5">
                     <button

@@ -26,6 +26,7 @@ class UserRequest extends FormRequest
         return [
             'name'      => 'required',
             'email'     => 'required|unique:users,email,' . $this->id . 'id',
+            'nip'       => 'required|unique:users,nip',
             'password'  => 'required|min:8',
         ];
     }
@@ -35,6 +36,7 @@ class UserRequest extends FormRequest
         return [
             'name'      => 'required',
             'email'     => 'required|unique:users,email,' . $this->id . 'id',
+            'nip'       => 'required|unique:users,nip',
         ];
     }
 
@@ -44,6 +46,8 @@ class UserRequest extends FormRequest
             'name.required'     => 'Nama tidak boleh kosong',
             'email.required'    => 'Email tidak boleh kosong',
             'email.unique'      => 'Email sudah digunakan',
+            'nip.required'      => 'NIP tidak boleh kosong',
+            'nip.unique'        => 'NIP sudah digunakan',
             'password.required' => 'Password tidak boleh kosong',
             'password.min'      => 'Password minimal terdiri dari 8 karakter',
         ];
@@ -55,6 +59,8 @@ class UserRequest extends FormRequest
             'name.required'     => 'Nama tidak boleh kosong',
             'email.required'    => 'Email tidak boleh kosong',
             'email.unique'      => 'Email sudah digunakan',
+            'nip.required'      => 'NIP tidak boleh kosong',
+            'nip.unique'        => 'NIP sudah digunakan',
         ];
     }
 }

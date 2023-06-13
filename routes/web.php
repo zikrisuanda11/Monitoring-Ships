@@ -22,6 +22,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('/activities', App\Http\Controllers\Admin\ActivityController::class);
         Route::resource('/fleets', App\Http\Controllers\Admin\FleetController::class);
         Route::resource('/users', App\Http\Controllers\Admin\UserController::class);
+        Route::resource('/employees', App\Http\Controllers\Admin\EmployeeController::class);
     });
 
     Route::prefix('/manager')->name('manager.')->middleware('role:manager')->group(function(){
@@ -29,6 +30,7 @@ Route::middleware('auth')->group(function () {
         Route::get('activities', [App\Http\Controllers\Manager\ActivityController::class, 'index'])->name('activities.index');
         Route::get('fleets', [App\Http\Controllers\Manager\FleetController::class, 'index'])->name('fleets.index');
         Route::get('users', [App\Http\Controllers\Manager\UserController::class, 'index'])->name('users.index');
+        Route::get('employees', [App\Http\Controllers\Manager\EmployeeController::class, 'index'])->name('employees.index');
     });
 });
 require __DIR__ . '/auth.php';

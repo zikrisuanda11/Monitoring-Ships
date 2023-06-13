@@ -19,11 +19,13 @@ class UserSeeder extends Seeder
         $admin = User::create([
             'name' => 'admin',
             'email' => 'admin@gmail.com',
+            'nip' => '123321',
             'password' => Hash::make('password'),
         ]);
         $manager = User::create([
             'name' => 'manager',
             'email' => 'manager@gmail.com',
+            'nip' => '1233211',
             'password' => Hash::make('password'),
         ]);
         $admin->assignRole('admin');

@@ -72,4 +72,13 @@ class ActivityFactory extends Factory
             ];
         });
     }
+
+    public function now()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'created_at' => Carbon::now(),
+            ];
+        });
+    }
 }

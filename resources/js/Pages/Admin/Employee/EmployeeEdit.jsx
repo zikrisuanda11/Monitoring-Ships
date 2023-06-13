@@ -1,32 +1,31 @@
 import React, { useState } from "react";
+import { Inertia } from '@inertiajs/inertia';
 import { Head } from "@inertiajs/inertia-react";
-import { Inertia } from "@inertiajs/inertia";
 import Layout from "../../Layouts/Default";
 import Alert from "@/Components/Alert";
+import Select from "@/Components/Selects/Select";
 
-export default function ShipsCreate({ errors, user }) {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [nip, setNip] = useState('');
-  const [password, setPassword] = useState('');
+export default function EmployeeEdit({ employee, errors, user }) {
+
+  const [name, setName] = useState(employee.name);
+  const [nip, setNip] = useState(employee.nip);
+  const [roles, setRoles] = useState(employee.roles);
 
   const storeUser = async (e) => {
     e.preventDefault();
 
-    Inertia.post('/admin/users', {
+    Inertia.put(`/admin/employees/${employee.id}`, {
       name: name,
-      email: email,
       nip: nip,
-      password: password
-    })
+      roles: roles,
+    });
   }
 
   const handleReset = () => {
     setName("");
-    setEmail("");
     setNip("");
-    setPassword("");
-    Inertia.visit('/admin/users');
+    setRoles("");
+    Inertia.visit('/admin/employees');
   };
   return (
     <>
@@ -37,8 +36,8 @@ export default function ShipsCreate({ errors, user }) {
           <div className="bg-white shadow px-4 py-5 sm:rounded-lg sm:p-6">
             <div className="md:grid md:grid-cols-3 md:gap-6">
               <div className="md:col-span-1">
-                <h3 className="text-lg font-medium leading-6 text-gray-900">Informasi Tenaga Kerja</h3>
-                <p className="mt-1 text-sm text-gray-500">Tambahkan informasi tenaga kerja.</p>
+                <h3 className="text-lg font-medium leading-6 text-gray-900">Informasi Kapal</h3>
+                <p className="mt-1 text-sm text-gray-500">Tambahkan informasi data kapal.</p>
               </div>
               <div className="mt-5 md:mt-0 md:col-span-2">
                 <form onSubmit={storeUser}>
@@ -56,6 +55,7 @@ export default function ShipsCreate({ errors, user }) {
                         type="text"
                         name="name"
                         id="name"
+                        autoComplete="nip"
                         className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                       />
                       {errors.name && (
@@ -64,62 +64,41 @@ export default function ShipsCreate({ errors, user }) {
                     </div>
 
                     <div className="col-span-6 sm:col-span-3">
-                      <label htmlFor="email" className="text-sm font-medium text-gray-700 relative flex">
-                        Email
-                        <span className="text-red-500 text-sm mx-1"> *</span>
-                      </label>
-                      <input
-                        value={email}
-                        onChange={(e) => {
-                          setEmail(e.target.value)
-                        }}
-                        type="email"
-                        name="email"
-                        id="email"
-                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                      />
-                      {errors.email && (
-                        <Alert message={errors.email} />
-                      )}
-                    </div>
-
-                    <div className="col-span-6 sm:col-span-3">
-                      <label htmlFor="password" className="text-sm font-medium text-gray-700 flex">
-                        Password
-                        <span className="text-red-500 text-sm mx-1">*</span>
-                      </label>
-                      <input
-                        value={password}
-                        onChange={(e) => {
-                          setPassword(e.target.value)
-                        }}
-                        type="password"
-                        name="password"
-                        id="password"
-                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                      />
-                      {errors.password && (
-                        <Alert message={errors.password} />
-                      )}
-                    </div>
-
-                    <div className="col-span-6 sm:col-span-3">
-                      <label htmlFor="password" className="text-sm font-medium text-gray-700 flex">
+                      <label htmlFor="nip" className="text-sm font-medium text-gray-700 relative flex">
                         NIP Pegawai
-                        <span className="text-red-500 text-sm mx-1">*</span>
+                        <span className="text-red-500 text-sm mx-1"> *</span>
                       </label>
                       <input
                         value={nip}
                         onChange={(e) => {
                           setNip(e.target.value)
                         }}
-                        type="number"
+                        type="text"
                         name="nip"
                         id="nip"
+                        autoComplete="given-name"
                         className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                       />
                       {errors.nip && (
                         <Alert message={errors.nip} />
+                      )}
+                    </div>
+
+                    <div className="col-span-6 sm:col-span-3">
+                      <label htmlFor="status_doc" className="text-sm font-medium text-gray-700 relative flex">
+                        Jabatan
+                        <span className="text-red-500 text-sm mx-1"> *</span>
+                      </label>
+                      <Select
+                        onDataChange={setRoles}
+                        values={[
+                          { key: "karyawan", name: "Karyawan" },
+                          { key: "manager", name: "Manager" },
+                        ]}
+                        role={roles}
+                      />
+                      {errors.status_doc && (
+                        <Alert message={errors.status_doc} />
                       )}
                     </div>
 

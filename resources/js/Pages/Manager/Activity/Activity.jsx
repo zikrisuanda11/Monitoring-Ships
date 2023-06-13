@@ -15,13 +15,11 @@ export default function activities({ activities, session, user }) {
 
   const columns = [
     {
-      field: 'activity_id',
-      headerName: 'Vessel ID',
-      width: 120,
-      headerAlign: 'center',
-      align: 'center'
+      field: 'ship_name',
+      headerName: 'Nama Kapal',
+      width: 200,
+
     },
-    { field: 'ship_name', headerName: 'Nama Kapal', width: 250 },
     {
       field: 'service_code',
       headerName: 'Service Code',
@@ -34,8 +32,50 @@ export default function activities({ activities, session, user }) {
         return capitalizedText;
       }
     },
-    { field: 'eta', headerName: 'ETA', width: 170 },
-    { field: 'etd', headerName: 'ETD', width: 200 },
+    {
+      field: 'eta',
+      headerName: 'ETA',
+      width: 170,
+      renderCell: (params) => {
+        const date = new Date(params.row.eta)
+        const day = date.getDate().toString().padStart(2, "0");
+        const month = (date.getMonth() + 1).toString().padStart(2, "0");
+        const year = date.getFullYear().toString();
+
+        const hours = date.getHours().toString().padStart(2, "0");
+        const minutes = date.getMinutes().toString().padStart(2, "0");
+        const seconds = date.getSeconds().toString().padStart(2, "0");
+
+        const formattedDateTime = `${day}-${month}-${year} ${hours}:${minutes}:${seconds}`;
+        return (
+          <>
+            {formattedDateTime}
+          </>
+        )
+      }
+    },
+    { 
+      field: 'etd', 
+      headerName: 'ETD', 
+      width: 200,
+      renderCell: (params) => {
+        const date = new Date(params.row.etd)
+        const day = date.getDate().toString().padStart(2, "0");
+        const month = (date.getMonth() + 1).toString().padStart(2, "0");
+        const year = date.getFullYear().toString();
+
+        const hours = date.getHours().toString().padStart(2, "0");
+        const minutes = date.getMinutes().toString().padStart(2, "0");
+        const seconds = date.getSeconds().toString().padStart(2, "0");
+
+        const formattedDateTime = `${day}-${month}-${year} ${hours}:${minutes}:${seconds}`;
+        return (
+          <>
+            {formattedDateTime}
+          </>
+        )
+      }
+    },
   ];
 
   return (
@@ -49,9 +89,17 @@ export default function activities({ activities, session, user }) {
               <p className="mt-2 text-sm text-gray-500">
                 List Vessel ID, Nama Kapal, ETA (Estimated Time Arrive), ETD (Estimated Time Departure)
               </p>
+              <div className="mt-2">
+                <button
+                  type="button"
+                  className="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
+                >
+                  <a className="text-xs" href="/print-report-daily">Cetak PDF</a>
+                </button>
+              </div>
             </div>
           </div>
-          <div className="mt-8 flex flex-col">
+          <div className="mt-2 flex flex-col">
             <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
               <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
                 <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">

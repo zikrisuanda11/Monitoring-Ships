@@ -48,17 +48,12 @@ export default function Users({ users, session, user }) {
     id: user.id,
     name: user.name,
     email: user.email,
+    nip: user.nip,
     roles: user.roles.map((role) => role.name)
   }));
 
   const columns = [
-    {
-      field: 'no',
-      headerName: 'No',
-      width: 100,
-      headerAlign: 'center',
-      align: 'center'
-    },
+    { field: 'nip', headerName: 'NIP Pegawai', width: 200 },
     { field: 'name', headerName: 'Nama', width: 200 },
     { field: 'email', headerName: 'Email', width: 250 },
     { field: 'roles', headerName: 'Jabatan', width: 150 },
