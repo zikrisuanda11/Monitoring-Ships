@@ -15,14 +15,7 @@ export default function Fleet({ fleets, user }) {
   }));
 
   const columns = [
-    {
-      field: 'no',
-      headerName: 'No',
-      width: 120,
-      headerAlign: 'center',
-      align: 'center'
-    },
-    { field: 'activity_id', headerName: 'ID Vessel', width: 200 },
+    { field: 'activity_id', headerName: 'ID Vessel', width: 150 },
     {
       field: 'status_doc',
       headerName: 'Status Document',
@@ -35,7 +28,7 @@ export default function Fleet({ fleets, user }) {
         return capitalizedText;
       }
     },
-    { field: 'pkk_no', headerName: 'PKK No', width: 300 },
+    { field: 'pkk_no', headerName: 'No PKK', width: 300 },
     { field: 'ppkb', headerName: 'PPKB', width: 200 },
   ];
 

@@ -7,6 +7,11 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>PDF</title>
     <style>
+        * {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 16px;
+        }
+
         body {
             margin: auto;
             padding: 30px;
@@ -20,23 +25,23 @@
 
         .report-daily table {
             width: 100%;
-            line-height: inherit;
             text-align: left;
             border-collapse: collapse;
-
         }
 
         body h3 {
             text-align: center;
         }
 
-        .report-daily table,
         .report-daily th,
         .report-daily td {
+            padding-bottom: 5px;
             border: 1px solid #999;
-            padding: 5px;
-            font-size: small;
+            font-size: 12px;
+        }
 
+        .report-daily th {
+            /* border-bottom: 1px solid #999; */
         }
 
         .time table td {
@@ -48,16 +53,8 @@
             align-items: center;
         }
 
-        #eta,
-        #etd {
+        #vessel_id {
             width: 100px;
-
-        }
-
-        .tanda-tangan {
-            position: absolute;
-            left: 500px;
-            top: 600px;
         }
     </style>
 
@@ -65,17 +62,16 @@
 
 <body>
     <div class="time">
-        {{-- ubah jadi range --}}
         <table>
             <tr>
-                <td>Hari</td>
+                <td>Lokasi</td>
                 <td>:</td>
-                <td>{{ $dayStartDate }}</td>
+                <td>Pelabuhan Semayang Balikpapan</td>
             </tr>
             <tr>
                 <td>Tanggal</td>
                 <td>:</td>
-                <td>{{ $formattedStartDate . ' s/d ' . $formattedEndDate }}</td>
+                <td>{{ $formattedStartDate . ' - ' . $formattedEndDate }}</td>
             </tr>
         </table>
     </div>
@@ -84,39 +80,50 @@
         <table>
             <thead>
                 <tr>
-                    <th>Vessel ID</th>
+                    <th id="vessel_id">Vessel ID</th>
                     <th>Nama Kapal</th>
-                    <th>Nama Agent</th>
                     <th id="eta">ETA</th>
                     <th id="etd">ETD</th>
+                    <th>Service Code</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($weekActivities as $weekActivity)
+                @if (count($weekActivities) != 0)
+                    @foreach ($weekActivities as $weekActivity)
+                        <tr>
+                            <td>{{ $weekActivity->activity_id }}</td>
+                            <td>{{ $weekActivity->ships->ship_name }}</td>
+                            <td>{{ $weekActivity->eta }}</td>
+                            <td>{{ $weekActivity->etd }}</td>
+                            <td>{{ Str::titleCase(str_replace('_', ' ', $weekActivity->service_code)) }}</td>
+                        </tr>
+                    @endforeach
+                @else
                     <tr>
-                        <td>{{ $weekActivity->activity_id }}</td>
-                        <td>{{ $weekActivity->ships->ship_name }}</td>
-                        <td>{{ $weekActivity->ships->agent }}</td>
-                        <td>{{ $weekActivity->eta }}</td>
-                        <td>{{ $weekActivity->etd }}</td>
+                        <th colspan="5">tidak ada data</th>
                     </tr>
-                @endforeach
+                @endif
             </tbody>
         </table>
-        <p>
+        <strong>
             Catatan:
-        </p>
-        <ul>
-            <li>Data ini mengambil data 1 Minggu</li>
-            <li>-</li>
-            <li>Kapal Franz Paucek PhD Ketinggalan Tas</li>
+        </strong>
+        <ul style="font-size: 16px">
+            <li>Laporan mencakup periode mingguan berdasarkan tanggal laporan</li>
+            <li>Laporan evaluasi dilakukan terhadap pelaksanaan jadwal keberangkatan dan kedatangan kapal</li>
         </ul>
     </div>
-    <div class="tanda-tangan">
-        <div style="width: 200px;">
-            <p style="margin-left: 35px">Staff Operasional</p>
+    <div class="tanda-tangan" style=" margin-top: 100px">
+        <div style="width: 200px; display: inline-block; margin-right: 140px">
+            <p style="margin-left: 40px">Staff Operasional</p>
             <br>
-            <p style="margin-left: 80px">{{$user_name}}</p>
+            <p style="margin-left: 70px">{{ $user_name }}</p>
+        </div>
+        <div style="width: 240px; display: inline-block; ">
+            <p style="margin-left: 35px">Balikpapan, {{ $formattedEndDate }}</p>
+            <p style="margin-left: 35px">Manager Pelayanan Kapal</p>
+            <br>
+            <p style="margin-left: 80px">Ali Rodriguez</p>
         </div>
     </div>
 </body>

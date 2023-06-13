@@ -39,6 +39,7 @@ class UserController extends Controller
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
+            'nip' => $request->nip,
             'password' => Hash::make($request->password),
         ]);
         $user->assignRole('admin');
@@ -84,7 +85,7 @@ class UserController extends Controller
         $data->update([
             'name' => $request->name,
             'email' => $request->email,
-            // 'password' => Hash::make($request->password),
+            'nip' => $request->nip,
         ]);
         
         return redirect()->route('admin.users.index')->with('success', 'Data Berhasil di Ubah');

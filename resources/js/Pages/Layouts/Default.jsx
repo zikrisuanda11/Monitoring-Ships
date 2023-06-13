@@ -33,7 +33,8 @@ export default function Layout({ children, user }) {
     { name: 'Data Kapal', href: '/admin/ships', icon: RiShip2Line, isActive: url === '/admin/ships' || url === '/admin/ships/create' },
     { name: 'Data Kegiatan Kapal', href: '/admin/activities', icon: GiBigWave, isActive: url === '/admin/activities' || url === '/admin/activities/create' || url === '/activities/id/edit' },
     { name: 'Data Armada Kapal', href: '/admin/fleets', icon: MdOutlineSailing, isActive: url === '/admin/fleets' || url === '/admin/fleets/create' },
-    { name: 'Data Tenaga Kerja', href: '/admin/users', icon: BiUserCircle, isActive: url === '/admin/users' || url === '/admin/users/create' },
+    { name: 'Data Tenaga Kerja', href: '/admin/employees', icon: BiUserCircle, isActive: url === '/admin/employees' || url === '/admin/employees/create' },
+    { name: 'Data Users', href: '/admin/users', icon: BiUserCircle, isActive: url === '/admin/users' || url === '/admin/users/create' },
   ]
 
   const navigationManager = [
@@ -41,7 +42,8 @@ export default function Layout({ children, user }) {
     { name: 'Data Kapal', href: '/manager/ships', icon: RiShip2Line, isActive: url === '/manager/ships' },
     { name: 'Data Kegiatan Kapal', href: '/manager/activities', icon: GiBigWave, isActive: url === '/manager/activities' },
     { name: 'Data Armada Kapal', href: '/manager/fleets', icon: MdOutlineSailing, isActive: url === '/manager/fleets' },
-    { name: 'Data Tenaga Kerja', href: '/manager/users', icon: BiUserCircle, isActive: url === '/manager/users' || url === '/manager/users/create' },
+    { name: 'Data Tenaga Kerja', href: '/manager/employees', icon: BiUserCircle, isActive: url === '/manager/employees' || url === '/manager/employees/create' },
+    { name: 'Data Users', href: '/manager/users', icon: BiUserCircle, isActive: url === '/manager/users' || url === '/manager/users/create' },
   ]
 
   const isAdmin = user.roles.find(role => role.name === 'admin');

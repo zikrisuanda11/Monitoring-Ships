@@ -25,7 +25,12 @@ class DashboardController extends Controller
             ->whereYear('created_at', '=', Carbon::now()->year)
             ->get()
             ->count();
-        $persentaseKenaikanTenagaKerja = (($totalTenagaKerjaBulanIni - $totalTenagaKerjaBulanLalu) / $totalTenagaKerjaBulanLalu) * 100;
+        
+        if($totalTenagaKerjaBulanLalu != 0){
+            $persentaseKenaikanTenagaKerja = (($totalTenagaKerjaBulanIni - $totalTenagaKerjaBulanLalu) / $totalTenagaKerjaBulanLalu) * 100;
+        }else{
+            $persentaseKenaikanTenagaKerja = 0;
+        }
 
         $totalKapal = Ship::all()->count();
         // dd(Carbon::now());

@@ -55,14 +55,7 @@ export default function Fleet({ fleets, session, user }) {
   }));
 
   const columns = [
-    {
-      field: 'no',
-      headerName: 'No',
-      width: 120,
-      headerAlign: 'center',
-      align: 'center'
-    },
-    { field: 'activity_id', headerName: 'ID Vessel', width: 200 },
+    { field: 'activity_id', headerName: 'ID Vessel', width: 150 },
     {
       field: 'status_doc',
       headerName: 'Status Document',
