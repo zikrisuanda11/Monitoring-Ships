@@ -74,7 +74,7 @@ class ActivityController extends Controller
         $activity = Activity::find($id);
         return inertia('Admin/Activity/ActivityEdit', [
             'ships' => $ships,
-            'activity' => $activity
+            'activity' => $activity,
         ]);
     }
 

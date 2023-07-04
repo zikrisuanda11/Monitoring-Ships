@@ -18,9 +18,9 @@ export default function ActivityEdit({ ships, activity, errors, user }) {
 	const [eta, setEta] = useState(dayjs(activity.eta));
 	const [etd, setEtd] = useState(dayjs(activity.etd));
 	const [service_code, setServiceCode] = useState(activity.service_code);
-	console.log(activity.eta);
 
 	const updateActivity = async (e) => {
+		
 		e.preventDefault();
 
 		Inertia.put(`/admin/activities/${activity.activity_id}`, {
@@ -123,7 +123,7 @@ export default function ActivityEdit({ ships, activity, errors, user }) {
 											</label>
 											<LocalizationProvider dateAdapter={AdapterDateFns}>
 												<DateTimePicker
-													// defaultValue={activity.eta}
+													defaultValue={dayjs(activity.eta).$d}
 													sx={{
 														width: '100%'
 													}}
@@ -151,7 +151,7 @@ export default function ActivityEdit({ ships, activity, errors, user }) {
 											</label>
 											<LocalizationProvider dateAdapter={AdapterDateFns}>
 												<DateTimePicker
-													// defaultValue={dayjs(activity.eta)}
+													defaultValue={dayjs(activity.etd).$d}
 													sx={{
 														width: '100%'
 													}}

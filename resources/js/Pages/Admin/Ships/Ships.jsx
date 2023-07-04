@@ -10,9 +10,6 @@ import DeleteModal from "@/Components/DeleteModal";
 
 export default function Ships({ user, ships, session }) {
 
-  // console.log(ships.map((ship) => {
-  //   console.log(ship);
-  // }));
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isModalMessageOpen, setIsModalMessageOpen] = useState(false)
 
