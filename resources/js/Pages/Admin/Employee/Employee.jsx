@@ -54,7 +54,7 @@ export default function Employee({ employees, session, user }) {
     { 
       field: 'nip', 
       headerName: 'NIP Pegawai', 
-      width: 150 ,
+      width: 200 ,
     },
     { field: 'name', headerName: 'Nama', width: 200 },
     { field: 'roles', headerName: 'Jabatan', width: 150 },

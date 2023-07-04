@@ -27,9 +27,9 @@ export default function Users({ users, user }) {
         <div className="px-4 sm:px-6 lg:px-8">
           <div className="sm:flex sm:items-center">
             <div className="sm:flex-auto">
-              <h1 className="text-xl font-semibold text-gray-900">Data Tenaga Kerja</h1>
+              <h1 className="text-xl font-semibold text-gray-900">Data Users</h1>
               <p className="mt-2 text-sm text-gray-500">
-                List Nama, Email & Jabatan para tenaga kerja
+                List Nama, Email & Jabatan Users
               </p>
             </div>
           </div>

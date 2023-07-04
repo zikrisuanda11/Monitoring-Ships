@@ -54,6 +54,11 @@ export default function activities({ activities = null, session, user }) {
 
   const columns = [
     {
+      field: 'activity_id',
+      headerName: 'Vessel ID',
+      width: 150
+    },
+    {
       field: 'ship_name',
       headerName: 'Nama Kapal',
       width: 200,
