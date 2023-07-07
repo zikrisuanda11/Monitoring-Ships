@@ -10,6 +10,7 @@ import PopoverHover from "@/Components/Popover";
 import Alert from "@/Components/Alert";
 import SelectServiceCode from "@/Components/Selects/SelectServiceCode";
 import ComboboxShip from "@/Components/ComboboxShip";
+import { zonedTimeToUtc } from 'date-fns-tz';
 
 export default function ActivityCreate({ ships, errors, user }) {
 	const [activity_id, setActivityId] = useState('');
@@ -17,6 +18,7 @@ export default function ActivityCreate({ ships, errors, user }) {
 	const [eta, setEta] = useState('');
 	const [etd, setEtd] = useState('');
 	const [service_code, setServiceCode] = useState('');
+	console.log(eta);
 
 	const storeActivity = async (e) => {
 		e.preventDefault();
@@ -125,8 +127,9 @@ export default function ActivityCreate({ ships, errors, user }) {
 													label="Estimated Time Arrive"
 													id="eta"
 													name="eta"
-													format="dd-MM-yyyy HH:mm:ss"
+													format="dd-MM-yyyy HH:mm"
 													onChange={(newValue) => (setEta(newValue))}
+													// onChange={(newValue) => setEta(zonedTimeToUtc(newValue, timezone))}
 												/>
 											</LocalizationProvider>
 											{errors.eta && (
@@ -152,7 +155,7 @@ export default function ActivityCreate({ ships, errors, user }) {
 													// onChange={setEtd}
 													id="etd"
 													name="etd"
-													format="dd-MM-yyyy HH:mm:ss"
+													format="dd-MM-yyyy HH:mm"
 													onChange={(newValue) => (setEtd(newValue))}
 												/>
 											</LocalizationProvider>

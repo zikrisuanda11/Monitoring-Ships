@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { InertiaLink } from '@inertiajs/inertia-react';
+import { InertiaLink, Link } from '@inertiajs/inertia-react';
 import { RiEditLine, RiDeleteBin2Line } from "react-icons/ri";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { Inertia } from "@inertiajs/inertia";
@@ -7,11 +7,19 @@ import { Head } from "@inertiajs/inertia-react";
 import Layout from "../../Layouts/Default";
 import SuccessAlert from "@/Components/SuccessAlert";
 import DeleteModal from "@/Components/DeleteModal";
+import dayjs from "dayjs";
+import BasicDatePicker from "@/Components/BasicDatePicker";
+import toast, { Toaster } from 'react-hot-toast';
 
-export default function activities({ activities = null, session, user }) {
-
+export default function activities({ activities = null, session, user, oneWeekBefore, dayNow }) {
+  
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isModalMessageOpen, setIsModalMessageOpen] = useState(false)
+  const [startDate, setStartDate] = useState(oneWeekBefore)
+  const [endDate, setEndDate] = useState(dayNow)
+  activities.map((activity) => {
+    console.log(activity.eta);
+  })
 
   const modalContent = useRef({
     title: '',
@@ -19,6 +27,13 @@ export default function activities({ activities = null, session, user }) {
     id: null,
     actionConfirm: null,
   })
+
+  const handleCetak = () => {
+    Inertia.get('/print-report-daily', {
+      startDate: startDate,
+      endDate: endDate
+    })
+  }
 
   const handleDelete = () => {
     Inertia.delete(`/admin/activities/${modalContent.current.id}`)
@@ -158,6 +173,7 @@ export default function activities({ activities = null, session, user }) {
     <>
       <Head title='Aktifitas-Admin' />
       <Layout user={user}>
+        <Toaster />
         {session.success.message && (
           <SuccessAlert
             openModal={isModalMessageOpen}
@@ -180,15 +196,26 @@ export default function activities({ activities = null, session, user }) {
               <p className="mt-2 text-sm text-gray-500">
                 List Vessel ID, Nama Kapal, ETA (Estimated Time Arrive), ETD (Estimated Time Departure)
               </p>
-              <div className="mt-2 flex flex-row">
-                <button
-                  type="button"
-                  className="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
-                >
-                  <a className="text-xs" href="/print-report-daily">Cetak PDF</a>
-                </button>
-                <div>
-                  {/* <RangePicker/> */}
+              <div className="mt-2 flex flex-row items-center gap-3">
+                  <div className="inline-flex mt-1.5 items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">
+                    <a href={`/print-report-daily/${startDate}/${endDate}`} target="blank">Cetak</a>
+                  </div>
+                <div className="w-52 ">
+                  <BasicDatePicker
+                    label={"Start Date"}
+                    onChange={(newValue) => { setStartDate(newValue) }}
+                    defaultValue={dayjs(oneWeekBefore)}
+                  />
+                </div>
+                <div className="w-52">
+                  <BasicDatePicker
+                    label={"End Date"}
+                    onChange={(newValue) => { setEndDate(newValue) }}
+                    defaultValue={dayjs(dayNow)}
+                  />
+                </div>
+                <div className="border px-4 py-2 rounded-md border-gray-300 mt-1.5 text-gray-600">
+                  Admin: {user.name}
                 </div>
               </div>
             </div>

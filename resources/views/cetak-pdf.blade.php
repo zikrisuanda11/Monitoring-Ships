@@ -114,16 +114,16 @@
         </ul>
     </div>
     <div class="tanda-tangan" style=" margin-top: 100px">
-        <div style="width: 200px; display: inline-block; margin-right: 140px">
+        <div style="width: 200px; display: inline-block; margin-right: 140px;">
             <p style="margin-left: 40px">Staff Operasional</p>
             <br>
-            <p style="margin-left: 70px">{{ $user_name }}</p>
+            <p style="text-align: center;">{{ $user_name }}</p>
         </div>
         <div style="width: 240px; display: inline-block; ">
-            <p style="margin-left: 35px">Balikpapan, {{ $formattedEndDate }}</p>
-            <p style="margin-left: 35px">Manager Pelayanan Kapal</p>
+            <p style="text-align: center">Balikpapan, {{ $formattedEndDate }}</p>
+            <p style="text-align: center">Manager Pelayanan Kapal</p>
             <br>
-            <p style="margin-left: 80px">Ali Rodriguez</p>
+            <p style="text-align: center">Ali Rodriguez</p>
         </div>
     </div>
 </body>

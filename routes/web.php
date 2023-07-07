@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
@@ -8,13 +9,17 @@ Route::get('/', [AuthenticatedSessionController::class, 'login']);
 
 Route::get('/dashboard', [DashboardController::class, 'index']);
 
+Route::post('/clear-flash', function (Request $request) {
+    $request->session()->forget('message');
+});
+
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index']);
     Route::get('/delete-session', function(){
         session()->forget('success');
         return;
     });
-    Route::get('/print-report-daily', [App\Http\Controllers\Admin\ActivityController::class, 'exportPdf']);
+    Route::get('/print-report-daily/{startDate}/{endDate}', [App\Http\Controllers\Admin\ActivityController::class, 'exportPdf']);
     Route::get('/tes', [App\Http\Controllers\Admin\ActivityController::class, 'tes']);
     
     Route::prefix('/admin')->name('admin.')->middleware('role:admin')->group(function () {

@@ -35,7 +35,7 @@ class UserRequest extends FormRequest
     {
         return [
             'name'      => 'required',
-            'email'     => 'required|unique:users,email,' . $this->id . 'id',
+            'email'     => 'required',
             'nip'       => 'required',
         ];
     }

@@ -20,9 +20,13 @@ class ActivityController extends Controller
      */
     public function index()
     {
+        $dayNow = Carbon::now();
+        $oneWeekBefore = Carbon::now()->subWeek();
         $data = Activity::with('ships')->get();
         return inertia('Admin/Activity/Activity', [
-            'activities' => $data
+            'activities' => $data,
+            'dayNow' => $dayNow,
+            'oneWeekBefore' => $oneWeekBefore
         ]);
     }
 
@@ -51,11 +55,17 @@ class ActivityController extends Controller
      */
     public function store(ActivityRequest $request)
     {
+        $dateTime = Carbon::parse($request->eta);
+        $datetime = DateTime::createFromFormat('Y-m-d\TH:i:s.u\Z', $request->eta);
+        dd($datetime);
+        
         Activity::create([
             'activity_id' => $request->activity_id,
             'ship_id' => $request->ship_id,
-            'eta' => DateTime::createFromFormat('Y-m-d\TH:i:s.u\Z', $request->eta),
-            'etd' => DateTime::createFromFormat('Y-m-d\TH:i:s.u\Z', $request->etd),
+            'eta' => Carbon::parse($request->eta),
+            'etd' => Carbon::parse($request->etd),
+            // 'eta' => DateTime::createFromFormat('Y-m-d\TH:i:s.u\Z', $request->eta),
+            // 'etd' => DateTime::createFromFormat('Y-m-d\TH:i:s.u\Z', $request->etd),
             'service_code' => $request->service_code
         ]);
 
@@ -114,28 +124,26 @@ class ActivityController extends Controller
 
         return redirect()->route('admin.activities.index')->with('success', 'Data Berhasil di Hapus');
     }
-    public function exportPdf()
+    public function exportPdf($start, $end)
     {
         $user_name = auth()->user()->name;
 
-        $startDate = Carbon::now()->subWeek();
-        $endDate = Carbon::now();
+        $startDate = Carbon::parse($start);
+        $endDate = Carbon::parse($end);
 
         $formattedStartDate = $startDate->locale('id')->isoFormat('D MMMM YYYY');
         $formattedEndDate = $endDate->locale('id')->isoFormat('D MMMM YYYY');
         
         $dayStartDate = $startDate->format('l');
         $dayEndDate = $endDate->format('l');
-
+        
         $weekActivities = Activity::with('ships')
             ->whereBetween('created_at', [$startDate, $endDate])
             ->get();
 
-        // return view('cetak-pdf', compact('weekActivities', 'formattedStartDate', 'formattedEndDate', 'dayStartDate', 'dayEndDate'));
-
         $pdf = Pdf::loadView('cetak-pdf', compact('weekActivities', 'formattedStartDate', 'formattedEndDate', 'dayStartDate', 'dayEndDate', 'user_name'));
+
         return $pdf->stream();
-        // return $pdf->download('report-weekly.pdf');
     }
 
 }
