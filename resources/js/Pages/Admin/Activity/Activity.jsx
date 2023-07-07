@@ -98,9 +98,9 @@ export default function activities({ activities = null, session, user }) {
         )
       }
     },
-    { 
-      field: 'etd', 
-      headerName: 'ETD', 
+    {
+      field: 'etd',
+      headerName: 'ETD',
       width: 200,
       renderCell: (params) => {
         const date = new Date(params.row.etd)
@@ -180,29 +180,29 @@ export default function activities({ activities = null, session, user }) {
               <p className="mt-2 text-sm text-gray-500">
                 List Vessel ID, Nama Kapal, ETA (Estimated Time Arrive), ETD (Estimated Time Departure)
               </p>
-              <div className="mt-2">
+              <div className="mt-2 flex flex-row">
                 <button
                   type="button"
                   className="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
                 >
                   <a className="text-xs" href="/print-report-daily">Cetak PDF</a>
                 </button>
+                <div>
+                  {/* <RangePicker/> */}
+                </div>
               </div>
             </div>
             <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
-              <button
-                type="button"
-                className="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
+              <InertiaLink
+                href="/admin/activities/create"
+                className="w-full"
+                tabIndex="-1"
+                method="get"
               >
-                <InertiaLink
-                  href="/admin/activities/create"
-                  className="w-full"
-                  tabIndex="-1"
-                  method="get"
-                >
+                <div className="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">
                   Tambah Data
-                </InertiaLink>
-              </button>
+                </div>
+              </InertiaLink>
             </div>
           </div>
           <div className="mt-2 flex flex-col">

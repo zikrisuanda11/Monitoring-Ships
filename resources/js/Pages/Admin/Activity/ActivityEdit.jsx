@@ -128,7 +128,7 @@ export default function ActivityEdit({ ships, activity, errors, user }) {
 														width: '100%'
 													}}
 													slotProps={{ textField: { size: 'small' } }}
-													label="Estimated Time Departure"
+													label="Estimated Time Arive"
 													// onChange={setEtd}
 													id="eta"
 													name="eta"

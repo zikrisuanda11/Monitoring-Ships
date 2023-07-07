@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { Chart } from 'chart.js/auto';;
 
-const Chartjs = ({ charts, label }) => {
+const Chartjs = ({ charts, label, yLabel }) => {
   const labels = charts ? charts.map((chart) => chart.tanggal) : [];
   const data = charts ? charts.map((chart) => chart.value) : [];
 
@@ -27,6 +27,15 @@ const Chartjs = ({ charts, label }) => {
       },
       options: {
         responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true,
+            title: {
+              display: true,
+              text: yLabel,
+            },
+          },
+        },
       },
     });
   }, []);

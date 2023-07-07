@@ -36,6 +36,12 @@ class EmployeeController extends Controller
      */
     public function store(EmployeeRequest $request)
     {
+        // $header = $request->header('X-Inertia-Version');
+        // dd($header);
+        // if (file_exists($manifest = public_path('build/manifest.json'))) {
+        //     return md5_file($manifest);
+        // }
+        // dd($manifest);
         Employee::create([
             'name' => $request->name,
             'nip' => $request->nip,

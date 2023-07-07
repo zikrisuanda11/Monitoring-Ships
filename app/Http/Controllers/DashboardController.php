@@ -11,49 +11,21 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        // stats
-        $totalTenagaKerja = User::role('admin')->get()->count();
-        $totalTenagaKerjaBulanIni = User::whereHas('roles', function ($query) {
-            $query->where('name', 'admin');
-        })->whereMonth('created_at', '=', date('m'))
-            ->whereYear('created_at', '=', Carbon::now()->year)
-            ->get()
-            ->count();
-        $totalTenagaKerjaBulanLalu = User::whereHas('roles', function ($query) {
-            $query->where('name', 'admin');
-        })->whereMonth('created_at', '=', date('m', strtotime('-1 month')))
-            ->whereYear('created_at', '=', Carbon::now()->year)
-            ->get()
-            ->count();
+        // stats total data kapal, total data kegiatan kapal
         
-        if($totalTenagaKerjaBulanLalu != 0){
-            $persentaseKenaikanTenagaKerja = (($totalTenagaKerjaBulanIni - $totalTenagaKerjaBulanLalu) / $totalTenagaKerjaBulanLalu) * 100;
-        }else{
-            $persentaseKenaikanTenagaKerja = 0;
-        }
 
         $totalKapal = Ship::all()->count();
-        // dd(Carbon::now());
-        $totalKapalBulanIni = Ship::whereMonth('created_at', '=', Carbon::now()->month)
-            ->whereYear('created_at', '=', Carbon::now()->year)
-            ->count();
-        $totalKapalBulanLalu = Ship::whereMonth('created_at', '=', date('m', strtotime('-1 month')))->count();
-        if($totalKapalBulanLalu != 0){
-            $persentaseJumlahKapalBulanIni = (($totalKapalBulanIni  - $totalKapalBulanLalu) / $totalKapalBulanLalu) * 100;
-        }else{
-            $persentaseJumlahKapalBulanIni = 0;
-        }
 
         $totalKegiatanKapal = Activity::all()->count();
-        $totalKegiatanKapalBulanIni = Activity::whereMonth('created_at', '=', Carbon::now()->month)
-            ->whereYear('created_at', '=', Carbon::now()->year)
-            ->count();
-        $totalKegiatanKapalBulanLalu = Activity::whereMonth('created_at', '=', date('m', strtotime('-1 month')))->count();
-        if($totalKegiatanKapalBulanLalu != 0){
-            $persentaseKegiatanKapalBulanIni = (($totalKegiatanKapalBulanIni  - $totalKegiatanKapalBulanLalu) / $totalKegiatanKapalBulanLalu) * 100;
-        }else{
-            $persentaseKegiatanKapalBulanIni = 0;
-        }
+        // $totalKegiatanKapalBulanIni = Activity::whereMonth('created_at', '=', Carbon::now()->month)
+        //     ->whereYear('created_at', '=', Carbon::now()->year)
+        //     ->count();
+        // $totalKegiatanKapalBulanLalu = Activity::whereMonth('created_at', '=', date('m', strtotime('-1 month')))->count();
+        // if($totalKegiatanKapalBulanLalu != 0){
+        //     $persentaseKegiatanKapalBulanIni = (($totalKegiatanKapalBulanIni  - $totalKegiatanKapalBulanLalu) / $totalKegiatanKapalBulanLalu) * 100;
+        // }else{
+        //     $persentaseKegiatanKapalBulanIni = 0;
+        // }
 
         // charts
         $today = Carbon::now()->addDay();
@@ -127,30 +99,22 @@ class DashboardController extends Controller
             ]
         ]);
 
-        $stats = array_merge([], [
-            [
-                'name' => 'Total Tenaga Kerja',
-                'stat' => number_format($totalTenagaKerjaBulanIni, 0),
-                'previousStat' => number_format($totalTenagaKerja, 0),
-                'change' => number_format($persentaseKenaikanTenagaKerja, 2) . ' %',
-                'changeType' => ($persentaseKenaikanTenagaKerja > 0) ? 'increase' : 'decrease',
-            ],
-            [
-                'name' => 'Total Kapal',
-                'stat' => $totalKapalBulanIni,
-                'previousStat' => $totalKapal,
-                'change' => number_format($persentaseJumlahKapalBulanIni, 2) . " %",
-                'changeType' => ($persentaseJumlahKapalBulanIni > 0) ? 'increase' : 'decrease',
-            ],
-            [
-                'name' => 'Total Kegiatan Kapal',
-                'stat' => $totalKegiatanKapalBulanIni,
-                'previousStat' => $totalKegiatanKapal,
-                'change' => number_format($persentaseKegiatanKapalBulanIni, 2) . " %",
-                'changeType' => ($persentaseKegiatanKapalBulanIni > 0) ? 'increase' : 'decrease',
-            ],
-        ]);
+        // $stats = array_merge([], [
+        //     [
+        //         'name' => 'Total Kapal',
+        //         'stat' => $totalKapal,
 
-        return inertia('Dashboard', compact('stats', 'charts'));
+        //     ],
+        //     [
+        //         'name' => 'Total Kegiatan Kapal',
+        //         'stat' => $totalKegiatanKapal,
+        //     ],
+        // ]);
+
+        return inertia('Dashboard', [
+            'charts' => $charts,
+            'totalKapal' => $totalKapal,
+            'totalKegiatanKapal' => $totalKegiatanKapal
+        ]);
     }
 }
