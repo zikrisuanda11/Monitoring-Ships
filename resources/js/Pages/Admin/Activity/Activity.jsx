@@ -28,13 +28,6 @@ export default function activities({ activities = null, session, user, oneWeekBe
     actionConfirm: null,
   })
 
-  const handleCetak = () => {
-    Inertia.get('/print-report-daily', {
-      startDate: startDate,
-      endDate: endDate
-    })
-  }
-
   const handleDelete = () => {
     Inertia.delete(`/admin/activities/${modalContent.current.id}`)
     closeModal();

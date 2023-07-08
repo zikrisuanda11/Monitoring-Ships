@@ -1,16 +1,13 @@
 import React, { useState } from "react";
 import { Inertia } from '@inertiajs/inertia';
 import { RiErrorWarningFill } from "react-icons/ri";
-import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { Head } from "@inertiajs/inertia-react";
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import Layout from "../../Layouts/Default";
 import PopoverHover from "@/Components/Popover";
 import Alert from "@/Components/Alert";
 import SelectServiceCode from "@/Components/Selects/SelectServiceCode";
 import ComboboxShip from "@/Components/ComboboxShip";
-import { zonedTimeToUtc } from 'date-fns-tz';
+import Datetimepicker from "@/Components/Datetimepicker";
 
 export default function ActivityCreate({ ships, errors, user }) {
 	const [activity_id, setActivityId] = useState('');
@@ -18,7 +15,6 @@ export default function ActivityCreate({ ships, errors, user }) {
 	const [eta, setEta] = useState('');
 	const [etd, setEtd] = useState('');
 	const [service_code, setServiceCode] = useState('');
-	console.log(eta);
 
 	const storeActivity = async (e) => {
 		e.preventDefault();
@@ -118,20 +114,10 @@ export default function ActivityCreate({ ships, errors, user }) {
 													content={<div><strong>Estimated Time Arrive</strong><p>Memperkirakan waktu tiba kapal di Armada</p></div>}
 												/>
 											</label>
-											<LocalizationProvider dateAdapter={AdapterDateFns}>
-												<DateTimePicker
-													sx={{
-														width: '100%'
-													}}
-													slotProps={{ textField: { size: 'small' } }}
-													label="Estimated Time Arrive"
-													id="eta"
-													name="eta"
-													format="dd-MM-yyyy HH:mm"
-													onChange={(newValue) => (setEta(newValue))}
-													// onChange={(newValue) => setEta(zonedTimeToUtc(newValue, timezone))}
-												/>
-											</LocalizationProvider>
+											<Datetimepicker
+												label="Estimated Time Arrive"
+												onChange={setEta}
+											/>
 											{errors.eta && (
 												<Alert message={errors.eta} />
 											)}
@@ -145,20 +131,10 @@ export default function ActivityCreate({ ships, errors, user }) {
 													content={<div><strong>Estimated Time Departure</strong><p>Memperkirakan waktu keberangkatan kapal dari Armada</p></div>}
 												/>
 											</label>
-											<LocalizationProvider dateAdapter={AdapterDateFns}>
-												<DateTimePicker
-													sx={{
-														width: '100%'
-													}}
-													slotProps={{ textField: { size: 'small' } }}
-													label="Estimated Time Departure"
-													// onChange={setEtd}
-													id="etd"
-													name="etd"
-													format="dd-MM-yyyy HH:mm"
-													onChange={(newValue) => (setEtd(newValue))}
-												/>
-											</LocalizationProvider>
+											<Datetimepicker
+												label="Estimated Time Departure"
+												onChange={setEtd}
+											/>
 											{errors.etd && (
 												<Alert message={errors.etd} />
 											)}

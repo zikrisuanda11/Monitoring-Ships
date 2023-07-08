@@ -55,17 +55,11 @@ class ActivityController extends Controller
      */
     public function store(ActivityRequest $request)
     {
-        $dateTime = Carbon::parse($request->eta);
-        $datetime = DateTime::createFromFormat('Y-m-d\TH:i:s.u\Z', $request->eta);
-        dd($datetime);
-        
         Activity::create([
             'activity_id' => $request->activity_id,
             'ship_id' => $request->ship_id,
             'eta' => Carbon::parse($request->eta),
             'etd' => Carbon::parse($request->etd),
-            // 'eta' => DateTime::createFromFormat('Y-m-d\TH:i:s.u\Z', $request->eta),
-            // 'etd' => DateTime::createFromFormat('Y-m-d\TH:i:s.u\Z', $request->etd),
             'service_code' => $request->service_code
         ]);
 

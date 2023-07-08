@@ -20,6 +20,7 @@
         "vite": "^4.0.0"
     },
     "dependencies": {
+        "@date-io/date-fns": "^2.16.0",
         "@emotion/react": "^11.10.6",
         "@emotion/styled": "^11.10.6",
         "@headlessui/react": "^1.7.13",

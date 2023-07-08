@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Inertia } from '@inertiajs/inertia';
 import { RiErrorWarningFill } from "react-icons/ri";
-import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { Head } from "@inertiajs/inertia-react";
 import Layout from "../../Layouts/Default";
 import PopoverHover from "@/Components/Popover";
@@ -9,8 +8,7 @@ import Alert from "@/Components/Alert";
 import SelectServiceCodeEdit from "@/Components/Selects/SelectServiceCodeEdit";
 import dayjs from 'dayjs';
 import ComboboxShip from "@/Components/ComboboxShip";
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import Datetimepicker from "@/Components/Datetimepicker";
 
 export default function ActivityEdit({ ships, activity, errors, user }) {
 	const [activity_id, setActivityId] = useState(activity.activity_id);
@@ -121,21 +119,11 @@ export default function ActivityEdit({ ships, activity, errors, user }) {
 													content={<div><strong>Estimated Time Arrive</strong><p>Memperkirakan waktu tiba kapal di Armada</p></div>}
 												/>
 											</label>
-											<LocalizationProvider dateAdapter={AdapterDateFns}>
-												<DateTimePicker
-													defaultValue={dayjs(activity.eta).$d}
-													sx={{
-														width: '100%'
-													}}
-													slotProps={{ textField: { size: 'small' } }}
-													label="Estimated Time Arive"
-													// onChange={setEtd}
-													id="eta"
-													name="eta"
-													format="dd-MM-yyyy HH:mm:ss"
-													onChange={(newValue) => (setEta(newValue))}
-												/>
-											</LocalizationProvider>
+											<Datetimepicker
+												value={dayjs(activity.eta).$d}
+												label="Estimated Time Arrive"
+												onChange={setEta}
+											/>
 											{errors.eta && (
 												<Alert message={errors.eta} />
 											)}
@@ -149,21 +137,11 @@ export default function ActivityEdit({ ships, activity, errors, user }) {
 													content={<div><strong>Estimated Time Departure</strong><p>Memperkirakan waktu keberangkatan kapal dari Armada</p></div>}
 												/>
 											</label>
-											<LocalizationProvider dateAdapter={AdapterDateFns}>
-												<DateTimePicker
-													defaultValue={dayjs(activity.etd).$d}
-													sx={{
-														width: '100%'
-													}}
-													slotProps={{ textField: { size: 'small' } }}
-													label="Estimated Time Departure"
-													// onChange={setEtd}
-													id="etd"
-													name="etd"
-													format="dd-MM-yyyy HH:mm:ss"
-													onChange={(newValue) => (setEtd(newValue))}
-												/>
-											</LocalizationProvider>
+											<Datetimepicker
+												value={dayjs(activity.etd).$d}
+												label="Estimated Time Departure"
+												onChange={setEtd}
+											/>
 											{errors.etd && (
 												<Alert message={errors.etd} />
 											)}
