@@ -9,7 +9,7 @@ class FleetController extends Controller
 {
     public function index()
     {
-        $fleets = Fleet::with('activity')->get();
+        $fleets = Fleet::with('activity.ships')->get();
         return inertia('Manager/Fleet/Fleet', [
             'fleets' => $fleets
         ]);
