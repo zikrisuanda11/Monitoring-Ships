@@ -132,7 +132,9 @@ class ActivityController extends Controller
         $dayEndDate = $endDate->format('l');
         
         $weekActivities = Activity::with('ships')
-            ->whereBetween('created_at', [$startDate, $endDate])
+            ->whereBetween('eta', [$startDate, $endDate])
+            ->whereBetween('etd', [$startDate, $endDate])
+            ->orderBy('eta', 'asc')
             ->get();
 
         $pdf = Pdf::loadView('cetak-pdf', compact('weekActivities', 'formattedStartDate', 'formattedEndDate', 'dayStartDate', 'dayEndDate', 'user_name'));
