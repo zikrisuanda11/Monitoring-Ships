@@ -124,6 +124,7 @@ class ActivityController extends Controller
 
         $startDate = Carbon::parse($start);
         $endDate = Carbon::parse($end);
+        // dd($startDate, $endDate);
 
         $formattedStartDate = $startDate->locale('id')->isoFormat('D MMMM YYYY');
         $formattedEndDate = $endDate->locale('id')->isoFormat('D MMMM YYYY');

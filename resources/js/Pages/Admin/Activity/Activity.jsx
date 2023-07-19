@@ -11,15 +11,21 @@ import dayjs from "dayjs";
 import BasicDatePicker from "@/Components/BasicDatePicker";
 import toast, { Toaster } from 'react-hot-toast';
 
+// function getFormattedDate(dateString) {
+//   var date = new Date(dateString);
+//   date.setHours(0, 0, 0);   // Set hours, minutes and seconds
+//   return date.toString();
+// }
+
 export default function activities({ activities = null, session, user, oneWeekBefore, dayNow }) {
-  
+
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isModalMessageOpen, setIsModalMessageOpen] = useState(false)
-  const [startDate, setStartDate] = useState(oneWeekBefore)
-  const [endDate, setEndDate] = useState(dayNow)
-  activities.map((activity) => {
-    console.log(activity.eta);
-  })
+  const [startDate, setStartDate] = useState(dayjs(oneWeekBefore).format('YYYY-MM-DD'))
+  const [endDate, setEndDate] = useState(dayjs(dayNow).format('YYYY-MM-DD'))
+  // console.log(dayjs(startDate).format('YYYY-MM-DD'));
+  // console.log(dayjs);
+  // console.log(dayjs(getFormattedDate(oneWeekBefore)).format(''));
 
   const modalContent = useRef({
     title: '',
@@ -190,20 +196,22 @@ export default function activities({ activities = null, session, user, oneWeekBe
                 List Vessel ID, Nama Kapal, ETA (Estimated Time Arrive), ETD (Estimated Time Departure)
               </p>
               <div className="mt-2 flex flex-row items-center gap-3">
+                <a href={`/print-report-daily/${startDate}/${endDate}`} target="blank">
                   <div className="inline-flex mt-1.5 items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">
-                    <a href={`/print-report-daily/${startDate}/${endDate}`} target="blank">Cetak</a>
+                    Cetak
                   </div>
+                </a>
                 <div className="w-52 ">
                   <BasicDatePicker
-                    label={"Start Date"}
-                    onChange={(newValue) => { setStartDate(newValue) }}
+                    label={"ETA"}
+                    onChange={(newValue) => { setStartDate(dayjs(newValue).format('YYYY-MM-DD')) }}
                     defaultValue={dayjs(oneWeekBefore)}
                   />
                 </div>
                 <div className="w-52">
                   <BasicDatePicker
-                    label={"End Date"}
-                    onChange={(newValue) => { setEndDate(newValue) }}
+                    label={"ETD"}
+                    onChange={(newValue) => { setEndDate(dayjs(newValue).format('YYYY-MM-DD')) }}
                     defaultValue={dayjs(dayNow)}
                   />
                 </div>

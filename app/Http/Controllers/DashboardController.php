@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Activity;
+use App\Models\Fleet;
 use App\Models\Ship;
 use App\Models\User;
 use Carbon\Carbon;
@@ -17,37 +18,46 @@ class DashboardController extends Controller
         $totalKapal = Ship::all()->count();
 
         $totalKegiatanKapal = Activity::all()->count();
-        // $totalKegiatanKapalBulanIni = Activity::whereMonth('created_at', '=', Carbon::now()->month)
-        //     ->whereYear('created_at', '=', Carbon::now()->year)
-        //     ->count();
-        // $totalKegiatanKapalBulanLalu = Activity::whereMonth('created_at', '=', date('m', strtotime('-1 month')))->count();
-        // if($totalKegiatanKapalBulanLalu != 0){
-        //     $persentaseKegiatanKapalBulanIni = (($totalKegiatanKapalBulanIni  - $totalKegiatanKapalBulanLalu) / $totalKegiatanKapalBulanLalu) * 100;
-        // }else{
-        //     $persentaseKegiatanKapalBulanIni = 0;
-        // }
+
+        $totalDataBongkarMuat = Fleet::all()->count();
 
         // charts
         $today = Carbon::now()->addDay();
 
         $oneMonthAgo = Carbon::now()->subMonth();
         
-        $totalKapalPerHari = [];
+        // $totalKapalPerHari = [];
+        
+        // for ($date = $oneMonthAgo; $date <= $today; $date->addDay()) {
+        //     $formattedDate = $date->toDateString();
+            
+        //     $totalKapalHari = Ship::whereDate('created_at', $formattedDate)->count();
+            
+        //     $data = [
+        //         'tanggal' => $formattedDate,
+        //         'value' => $totalKapalHari,
+        //     ];
+            
+        //     $totalKapalPerHari[] = $data;
+            
+        // }
+
+        $totalBongkarMuatPerHari = [];
         
         for ($date = $oneMonthAgo; $date <= $today; $date->addDay()) {
             $formattedDate = $date->toDateString();
             
-            $totalKapalHari = Ship::whereDate('created_at', $formattedDate)->count();
+            $totalKapalHari = Fleet::whereDate('created_at', $formattedDate)->count();
             
             $data = [
                 'tanggal' => $formattedDate,
                 'value' => $totalKapalHari,
             ];
             
-            $totalKapalPerHari[] = $data;
+            $totalBongkarMuatPerHari[] = $data;
             
         }
-        
+        // dd($totalBongkarMuatPerHari);
         $today = Carbon::now()->addDay();
         $oneMonthAgo = Carbon::now()->subDays(30);
         
@@ -86,9 +96,13 @@ class DashboardController extends Controller
 
         $charts = array_merge([], [
             [
-                'chartKapal' => $totalKapalPerHari,
-                'label' => 'Data Kapal 30 Hari Terakhir'
+                'chartKapal' => $totalBongkarMuatPerHari,
+                'label' => 'Data Bongkar Muat 30 Hari Terakhir'
             ],
+            // [
+            //     'chartKapal' => $totalKapalPerHari,
+            //     'label' => 'Data Kapal 30 Hari Terakhir'
+            // ],
             [
                 'eta' => $totalEtaPerHari,
                 'label' => 'Data ETA 30 Hari Terakhir'
@@ -99,22 +113,11 @@ class DashboardController extends Controller
             ]
         ]);
 
-        // $stats = array_merge([], [
-        //     [
-        //         'name' => 'Total Kapal',
-        //         'stat' => $totalKapal,
-
-        //     ],
-        //     [
-        //         'name' => 'Total Kegiatan Kapal',
-        //         'stat' => $totalKegiatanKapal,
-        //     ],
-        // ]);
-
         return inertia('Dashboard', [
             'charts' => $charts,
             'totalKapal' => $totalKapal,
-            'totalKegiatanKapal' => $totalKegiatanKapal
+            'totalKegiatanKapal' => $totalKegiatanKapal,
+            'totalDataBongkarMuat' => $totalDataBongkarMuat
         ]);
     }
 }
