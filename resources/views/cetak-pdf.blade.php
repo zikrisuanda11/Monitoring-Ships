@@ -75,7 +75,7 @@
             </tr>
         </table>
     </div>
-    <h3>Laporan Mingguan Monitoring Penjadwalan Kapal</h3>
+    <h3>Laporan Monitoring Penjadwalan Kedatangan & Keberangkatan Kapal</h3>
     <div class="report-daily">
         <table>
             <thead>
@@ -109,8 +109,7 @@
             Catatan:
         </strong>
         <ul style="font-size: 16px">
-            <li>Laporan mencakup periode mingguan berdasarkan tanggal laporan</li>
-            <li>Laporan evaluasi dilakukan terhadap pelaksanaan jadwal keberangkatan dan kedatangan kapal</li>
+            <li>Laporan mencakup periode sesuai dengan waktu keberangkatan dan kedatangan kapal</li>
         </ul>
     </div>
     <div class="tanda-tangan" style=" margin-top: 100px">
@@ -123,7 +122,7 @@
             <p style="text-align: center">Balikpapan, {{ $formattedEndDate }}</p>
             <p style="text-align: center">Manager Pelayanan Kapal</p>
             <br>
-            <p style="text-align: center">Ali Rodriguez</p>
+            <p style="text-align: center">Imam Syariffudin</p>
         </div>
     </div>
 </body>

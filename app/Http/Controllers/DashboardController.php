@@ -105,11 +105,11 @@ class DashboardController extends Controller
             // ],
             [
                 'eta' => $totalEtaPerHari,
-                'label' => 'Data ETA 30 Hari Terakhir'
+                'label' => 'Data Kedatangan 30 Hari Terakhir'
             ],
             [
                 'etd' => $totalEtdPerHari,
-                'label' => 'Data ETD 30 Hari Terakhir'
+                'label' => 'Data Keberangkatan 30 Hari Terakhir'
             ]
         ]);
 
