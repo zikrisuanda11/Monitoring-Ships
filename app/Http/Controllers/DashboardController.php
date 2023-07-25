@@ -128,9 +128,7 @@ class DashboardController extends Controller
         for ($date = $startBongkar; $date <= $endBongkar; $date = $date->clone()->addDay()) {
             $formattedDate = $date->toDateString();
 
-            $totalKapalHari = Fleet::select('*')
-                ->join('activities', 'fleets.activity_id', '=', 'activities.activity_id')
-                ->whereDate('activities.eta', $formattedDate)->count();
+            $totalKapalHari = Activity::whereDate('eta', $formattedDate)->count();
 
             $data = [
                 'tanggal' => $formattedDate,
