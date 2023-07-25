@@ -27,7 +27,7 @@ class ShipController extends Controller
 
     public function store(ShipRequest $request)
     {
-        dd('tes');
+        // dd('tes');
         Ship::create([
             'ship_name' => $request->ship_name,
             'grt' => $request->grt,

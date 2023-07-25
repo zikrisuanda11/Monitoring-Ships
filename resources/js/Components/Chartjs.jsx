@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { Chart } from 'chart.js/auto';;
+import { Chart } from 'chart.js/auto';
 
 const Chartjs = ({ charts, label, yLabel }) => {
   const labels = charts ? charts.map((chart) => chart.tanggal) : [];
@@ -10,7 +10,7 @@ const Chartjs = ({ charts, label, yLabel }) => {
   useEffect(() => {
     const ctx = chartRef.current.getContext('2d');
 
-    new Chart(ctx, {
+    const newChart = new Chart(ctx, {
       type: 'line',
       data: {
         labels: labels,
@@ -38,7 +38,12 @@ const Chartjs = ({ charts, label, yLabel }) => {
         },
       },
     });
-  }, []);
+
+    // Hapus dan buat chart baru saat data berubah
+    return () => {
+      newChart.destroy();
+    };
+  }, [charts, label, yLabel]);
 
   return <canvas ref={chartRef} />;
 };
