@@ -1,0 +1,54 @@
+stages:
+  - build
+  - deploy
+
+before_script:
+  - df
+  - cat /etc/resolv.conf
+  - cat /etc/hosts
+
+# This fixes "error during connect: Post http://docker:2375/v1.40/auth: dial tcp: lookup docker on 192.168.65.5:53: no such host"
+variables:
+  # DOCKER_HOST variable tells docker how to connect to the daemon (a background service running inside the Docker VM)
+  DOCKER_HOST: tcp://docker:2375/
+  # Environemt Variable for docker:dind service explaining to use overlay2 as supporting driver for docker
+  # https://docs.docker.com/storage/storagedriver/overlayfs-driver/
+  DOCKER_DRIVER: overlay2
+  # We need to disable TLS (https://about.gitlab.com/blog/2019/07/31/docker-in-docker-with-docker-19-dot-03/#disable-tls)
+  # to fix the error "docker: Cannot connect to the Docker daemon at tcp://docker:2375. Is the docker daemon running?"
+  DOCKER_TLS_CERTDIR: ""
+
+
+services:
+  - name: docker:dind
+    entrypoint: ["env", "-u", "DOCKER_HOST"]
+    command: ["dockerd-entrypoint.sh"]
+
+# push to container registry
+build:
+  only:
+    - main
+  stage: build
+  image: docker:dind
+  before_script:
+   - echo $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER $CI_REGISTRY --password-stdin
+  script: 
+   - docker build --pull -t "$CI_REGISTRY_IMAGE" .
+   - docker push "$CI_REGISTRY_IMAGE"
+   - echo "complete build"
+
+deploy:
+  only:
+      - main
+  # when: manual
+  stage: deploy
+  before_script:
+    - 'which ssh-agent || ( apk update && apk add --no-cache openssh )'
+    - mkdir -p ~/.ssh
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_rsa
+    - chmod 700 ~/.ssh/id_rsa
+    - eval "$(ssh-agent -s)"
+    - ssh-add ~/.ssh/id_rsa
+    - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+  script:
+    - ssh -o StrictHostKeyChecking=no ${SSH_USER}@${SSH_HOST} "export APP_IMAGE_STG=$CI_REGISTRY_IMAGE && docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY && docker container stop kapal && docker container rm kapal && docker image rm $CI_REGISTRY_IMAGE  && docker pull $CI_REGISTRY_IMAGE && docker container run -d --name kapal --net=host $CI_REGISTRY_IMAGE "

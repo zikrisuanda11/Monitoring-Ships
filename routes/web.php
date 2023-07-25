@@ -8,6 +8,7 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 Route::get('/', [AuthenticatedSessionController::class, 'login']);
 
 Route::get('/dashboard', [DashboardController::class, 'index']);
+Route::post('/dashboard', [DashboardController::class, 'update']);
 
 Route::post('/clear-flash', function (Request $request) {
     $request->session()->forget('message');
